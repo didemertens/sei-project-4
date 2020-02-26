@@ -1,9 +1,24 @@
+from languages.models import Language
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 import django.contrib.auth.password_validation as validations
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 User = get_user_model()
+
+
+class BuddySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'image')
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Language
+        fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -31,4 +46,14 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'password_confirmation',)
+        fields = ('id', 'username', 'email', 'password',
+                  'password_confirmation', 'image')
+
+
+class PopulatedUserSerialzer(UserSerializer):
+    buddy = BuddySerializer()
+    languages = LanguageSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'image', 'buddy', 'languages')

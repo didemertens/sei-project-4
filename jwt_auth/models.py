@@ -7,3 +7,5 @@ class User(AbstractUser):
     image = models.CharField(max_length=200)
     buddy = models.ForeignKey(
         "User", null=True, blank=True, on_delete=models.SET_NULL)
+    languages = models.ManyToManyField(
+        'languages.Language', related_name='users', blank=True)

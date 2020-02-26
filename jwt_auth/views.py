@@ -1,10 +1,11 @@
+import jwt
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
 from django.conf import settings
-import jwt
-from .serializers import UserSerializer
+from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_202_ACCEPTED
+from .serializers import UserSerializer, PopulatedUserSerialzer
 User = get_user_model()
 
 
@@ -14,9 +15,9 @@ class RegisterView(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'message': 'Registration successful'})
+            return Response({'message': 'Registration successful'}, status=HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=422)
+        return Response(serializer.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
 
 class LoginView(APIView):
@@ -49,3 +50,17 @@ class LoginView(APIView):
         token = jwt.encode(
             {'sub': user.id}, settings.SECRET_KEY, algorithm='HS256')
         return Response({'token': token, 'message': f'Welcome back {user.username}!'})
+
+
+class UserProfileView(APIView):
+    def get_user(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise PermissionDenied({'message': 'Not Found'})
+
+    def get(self, request, pk):
+        user = self.get_user(pk)
+        ser_user = PopulatedUserSerialzer(user)
+        # buddy = self.get_user(ser_user['buddy'].value)
+        return Response(ser_user.data)
