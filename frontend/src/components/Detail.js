@@ -1,6 +1,8 @@
 import React from 'react'
+import { PropTypes } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 import Auth from './lib/Auth'
 
 class Detail extends React.Component {
@@ -17,6 +19,7 @@ class Detail extends React.Component {
       text: '',
     }
   }
+
 
   getQuestion = async () => {
     try {
@@ -92,14 +95,19 @@ class Detail extends React.Component {
                 }
               </div>
               <h1 className="title">{question.title}</h1>
+              <p className="subtitle is-size-6">{moment(question.created_at).calendar()} by <Link to={`/profile/${question.owner.id}`}>
+                {question.owner.username}</Link></p>
               {question.languages.map(language => (
                 <div key={language.id}>
                   <img className="image is-24x24" src={language.image} alt="{language.name}" />
                 </div>
               ))}
-              <Link to={`/profile/${question.owner.id}`}><p>{question.owner.username}</p></Link>
+
+
+
               <p>{question.text}</p>
             </div>
+            {/* answers */}
             <div className="section">
               {question.answers.length > 0 &&
                 <>
@@ -107,6 +115,7 @@ class Detail extends React.Component {
                   {question.answers.map(answer => (
                     <div className="box" key={answer.id}>
                       {answer.owner.id === currentUser && <button onClick={() => { this.handleDeleteAnswer(answer.id) }} className="button is-danger">Delete</button>}
+                      <p className="is-size-7">{moment(answer.created_at).calendar()}</p>
                       <Link to={`/profile/${answer.owner.id}`}><p>{answer.owner.username}</p></Link>
                       <p>{answer.text}</p>
                     </div>
@@ -120,7 +129,7 @@ class Detail extends React.Component {
                 <form onSubmit={this.handleSubmit} className="form">
                   <div className="field">
                     <div className="control">
-                      <input
+                      <textarea
                         required="True"
                         className="input"
                         type="text"
@@ -136,6 +145,35 @@ class Detail extends React.Component {
                 <h4>You need to be <Link to='/login'>logged</Link> in to answer this question!</h4>
               }
             </div>
+
+
+            {/* <CKEditor
+              editor={ClassicEditor}
+              data="<p>Hello from CKEditor 5!</p>"
+              onInit={editor => {
+                // You can store the "editor" and use when it is needed.
+                console.log('Editor is ready to use!', editor);
+              }}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                console.log({ event, editor, data });
+              }}
+              onBlur={(event, editor) => {
+                console.log('Blur.', editor);
+              }}
+              onFocus={(event, editor) => {
+                console.log('Focus.', editor);
+              }}
+            /> */}
+
+            {/* <CKEditor
+              // data={input.value}
+              editor={ClassicEditor}
+              config={{
+                toolbar: ['heading', '|', 'bold', 'italic', 'CodeBlock', 'blockQuote', 'link', 'numberedList', 'bulletedList',
+                  'imageUpload', 'mediaEmbed', '|', 'undo', 'redo']
+              }}
+            /> */}
 
           </div>
         </div>

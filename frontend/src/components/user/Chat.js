@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-
+import moment from 'moment'
 import Auth from '../lib/Auth'
 
 class Chat extends React.Component {
@@ -85,6 +85,7 @@ class Chat extends React.Component {
               :
               `box has-text-left`}
               key={message.id} >
+              <p className="is-size-7">{moment(message.created_at).calendar()}</p>
               <p>{message.text}</p>
             </div>
           )
