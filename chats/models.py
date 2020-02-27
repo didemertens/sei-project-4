@@ -5,9 +5,9 @@ User = get_user_model()
 
 class Chat(models.Model):
     owner = models.ForeignKey(
-        User, related_name='chats_from', null=True, on_delete=models.CASCADE)
+        User, related_name='chats_from', on_delete=models.CASCADE, default='')
     receiver = models.ForeignKey(
-        User, related_name='chats_with', null=True, on_delete=models.CASCADE)
+        User, related_name='chats_with', on_delete=models.CASCADE, default='')
 
     def __str__(self):
         return f'Chat from {self.owner} with {self.receiver}'

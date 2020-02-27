@@ -11,6 +11,12 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class ChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = '__all__'
+
+
+class PopulatedChatSerializer(serializers.ModelSerializer):
     messages = MessageSerializer(many=True)
 
     class Meta:

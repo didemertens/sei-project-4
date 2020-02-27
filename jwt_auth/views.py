@@ -62,5 +62,4 @@ class UserProfileView(APIView):
     def get(self, request, pk):
         user = self.get_user(pk)
         ser_user = PopulatedUserSerialzer(user)
-        # buddy = self.get_user(ser_user['buddy'].value)
         return Response(ser_user.data)

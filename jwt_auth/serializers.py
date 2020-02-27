@@ -1,3 +1,4 @@
+from chats.models import Chat
 from languages.models import Language
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
@@ -7,13 +8,6 @@ from django.core.exceptions import ValidationError
 User = get_user_model()
 
 
-class BuddySerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'email', 'image')
-
-
 class LanguageSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -21,8 +15,21 @@ class LanguageSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UserSerializer(serializers.ModelSerializer):
+class BuddySerializer(serializers.ModelSerializer):
+    languages = LanguageSerializer(many=True)
 
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'image', 'languages')
+
+
+class ChatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = '__all__'
+
+
+class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password_confirmation = serializers.CharField(write_only=True)
 
@@ -47,13 +54,16 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password',
-                  'password_confirmation', 'image')
+                  'password_confirmation', 'image', 'languages')
 
 
 class PopulatedUserSerialzer(UserSerializer):
     buddy = BuddySerializer()
+    chats_from = ChatsSerializer(many=True)
+    chats_with = ChatsSerializer(many=True)
     languages = LanguageSerializer(many=True)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'image', 'buddy', 'languages')
+        fields = ('id', 'username', 'email', 'image',
+                  'buddy', 'languages', 'chats_from', 'chats_with')
