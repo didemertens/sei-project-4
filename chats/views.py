@@ -1,7 +1,7 @@
 # pylint: disable=no-member
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_401_UNAUTHORIZED, HTTP_202_ACCEPTED
+from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_401_UNAUTHORIZED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from .models import Chat, Message
 from .serializers import ChatSerializer, MessageSerializer, PopulatedChatSerializer
@@ -32,6 +32,18 @@ class ChatDetailView(APIView):
 
             serialized_chat = PopulatedChatSerializer(chat)
             return Response(serialized_chat.data)
+        except Chat.DoesNotExist:
+            return Response({'message': 'Not Found'}, status=HTTP_404_NOT_FOUND)
+
+    def delete(self, request, pk):
+        try:
+            chat = Chat.objects.get(pk=pk)
+
+            if chat.owner.id != request.user.id and chat.receiver.id != request.user.id:
+                return Response(status=HTTP_401_UNAUTHORIZED)
+
+            chat.delete()
+            return Response(status=HTTP_204_NO_CONTENT)
         except Chat.DoesNotExist:
             return Response({'message': 'Not Found'}, status=HTTP_404_NOT_FOUND)
 

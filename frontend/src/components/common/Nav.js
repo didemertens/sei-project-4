@@ -1,6 +1,5 @@
 import React from 'react'
 import Auth from '../lib/Auth'
-
 import { withRouter, Link } from 'react-router-dom'
 
 class Nav extends React.Component {

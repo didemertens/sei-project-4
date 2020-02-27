@@ -5,10 +5,9 @@ const Home = () => {
     <main>
       <div className="container">
         <h1>Home</h1>
-        <button className="button">Click</button>
+        <a href="/questions" className="button">Go to all questions</a>
       </div>
     </main>
-
   )
 }
 

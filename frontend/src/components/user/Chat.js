@@ -46,6 +46,19 @@ class Chat extends React.Component {
     }
   }
 
+  handleDeleteChat = async (e) => {
+    e.preventDefault()
+    console.log(this.state.chatData.id)
+    try {
+      await axios.delete(`/api/chats/${this.state.chatData.id}/`, {
+        headers: { Authorization: `Bearer ${Auth.getToken()}` }
+      })
+      this.props.history.goBack('')
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   componentDidMount() {
     const currentUser = Auth.getPayload().sub
     this.setState({ currentUser })
@@ -56,13 +69,22 @@ class Chat extends React.Component {
     const { messageData, chatData, currentUser } = this.state
     return (
       <div className="section">
+        {chatData.owner.id === currentUser || chatData.receiver.id === currentUser
+          ?
+          <button onClick={this.handleDeleteChat} className="button is-danger">Delete</button>
+          :
+          null}
         <h1 className="title">{chatData.owner.id === currentUser ? `Chat with ${chatData.receiver.username}`
           : `Chat with ${chatData.owner.username}`}
         </h1>
         {chatData.messages.map(message => {
           return (
-            <div className={message.owner === currentUser ? `box has-text-right` : `box has-text-left`
-            } key={message.id} >
+            <div className={message.owner === currentUser
+              ?
+              `box has-text-right`
+              :
+              `box has-text-left`}
+              key={message.id} >
               <p>{message.text}</p>
             </div>
           )
