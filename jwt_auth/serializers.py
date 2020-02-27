@@ -23,7 +23,16 @@ class BuddySerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'image', 'languages')
 
 
+class ChatUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username')
+
+
 class ChatsSerializer(serializers.ModelSerializer):
+    receiver = ChatUserSerializer()
+    owner = ChatUserSerializer()
+
     class Meta:
         model = Chat
         fields = '__all__'
