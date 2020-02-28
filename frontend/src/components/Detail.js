@@ -1,9 +1,12 @@
 import React from 'react'
-import { PropTypes } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import Auth from './lib/Auth'
+
+import SunEditor from "suneditor-react"
+import 'suneditor/dist/css/suneditor.min.css'
+import parse from 'html-react-parser'
 
 class Detail extends React.Component {
   state = {
@@ -17,21 +20,23 @@ class Detail extends React.Component {
     },
     answerData: {
       text: '',
+      submitted: false
     }
   }
-
 
   getQuestion = async () => {
     try {
       const { data } = await axios.get(`/api/questions/${this.props.match.params.id}`)
       this.setState({ question: data })
+      const answerData = { ...this.state.answerData, submitted: false }
+      this.setState({ answerData })
     } catch (err) {
       console.log(err)
     }
   }
 
-  handleChange = ({ target: { name, value } }) => {
-    const answerData = { ...this.state.answerData, [name]: value }
+  handleChangeEditor = (content) => {
+    const answerData = { ...this.state.answerData, text: content }
     this.setState({ answerData })
   }
 
@@ -41,7 +46,7 @@ class Detail extends React.Component {
       await axios.post(`/api/questions/${this.props.match.params.id}/answers/`, this.state.answerData,
         { headers: { Authorization: `Bearer ${Auth.getToken()}` } }
       )
-      const answerData = { ...this.state.answerData, text: '' }
+      const answerData = { ...this.state.answerData, text: '', submitted: true }
       this.setState({ answerData })
       this.getQuestion()
     } catch (err) {
@@ -77,6 +82,7 @@ class Detail extends React.Component {
 
   render() {
     const { question, answerData, currentUser } = this.state
+    // console.log(this.state)
     return (
       <div className="container">
         <div className="columns">
@@ -102,24 +108,24 @@ class Detail extends React.Component {
                   <img className="image is-24x24" src={language.image} alt="{language.name}" />
                 </div>
               ))}
-
-
-
-              <p>{question.text}</p>
+              <div>{parse(question.text)}</div>
             </div>
+
             {/* answers */}
             <div className="section">
               {question.answers.length > 0 &&
                 <>
                   <h5 className="title is-size-5">Answers:</h5>
-                  {question.answers.map(answer => (
-                    <div className="box" key={answer.id}>
-                      {answer.owner.id === currentUser && <button onClick={() => { this.handleDeleteAnswer(answer.id) }} className="button is-danger">Delete</button>}
-                      <p className="is-size-7">{moment(answer.created_at).calendar()}</p>
-                      <Link to={`/profile/${answer.owner.id}`}><p>{answer.owner.username}</p></Link>
-                      <p>{answer.text}</p>
-                    </div>
-                  ))}
+                  {question.answers.map(answer => {
+                    return (
+                      <div className="box" key={answer.id}>
+                        {answer.owner.id === currentUser && <button onClick={() => { this.handleDeleteAnswer(answer.id) }} className="button is-danger">Delete</button>}
+                        <p className="is-size-7">{moment(answer.created_at).calendar()}</p>
+                        <Link to={`/profile/${answer.owner.id}`}><p>{answer.owner.username}</p></Link>
+                        <div>{parse(answer.text)}</div>
+                      </div>
+                    )
+                  })}
                 </>
               }
             </div>
@@ -127,57 +133,32 @@ class Detail extends React.Component {
             <div className="section">
               {Auth.isAuthenticated() ?
                 <form onSubmit={this.handleSubmit} className="form">
-                  <div className="field">
-                    <div className="control">
-                      <textarea
-                        required="True"
-                        className="input"
-                        type="text"
-                        placeholder="Type a message"
-                        name="text"
-                        onChange={this.handleChange}
-                        value={answerData.text} />
-                    </div>
-                  </div>
+                  <SunEditor
+                    setContents={answerData.submitted ? '' : answerData.text}
+                    onChange={this.handleChangeEditor}
+                    required="True"
+                    lang="en"
+                    placeholder="Type your answer here"
+                    setOptions={{
+                      height: 200,
+                      buttonList: [
+                        ['undo', 'redo'],
+                        ['font', 'fontSize', 'formatBlock'],
+                        ['paragraphStyle'],
+                        ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                        ['fontColor', 'hiliteColor', 'textStyle']
+                      ]
+                    }}
+                  />
                   <button className="button">Send</button>
                 </form>
                 :
                 <h4>You need to be <Link to='/login'>logged</Link> in to answer this question!</h4>
               }
             </div>
-
-
-            {/* <CKEditor
-              editor={ClassicEditor}
-              data="<p>Hello from CKEditor 5!</p>"
-              onInit={editor => {
-                // You can store the "editor" and use when it is needed.
-                console.log('Editor is ready to use!', editor);
-              }}
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                console.log({ event, editor, data });
-              }}
-              onBlur={(event, editor) => {
-                console.log('Blur.', editor);
-              }}
-              onFocus={(event, editor) => {
-                console.log('Focus.', editor);
-              }}
-            /> */}
-
-            {/* <CKEditor
-              // data={input.value}
-              editor={ClassicEditor}
-              config={{
-                toolbar: ['heading', '|', 'bold', 'italic', 'CodeBlock', 'blockQuote', 'link', 'numberedList', 'bulletedList',
-                  'imageUpload', 'mediaEmbed', '|', 'undo', 'redo']
-              }}
-            /> */}
-
           </div>
         </div>
-      </div>
+      </div >
     )
   }
 }

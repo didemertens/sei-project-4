@@ -2,6 +2,8 @@ import React from 'react'
 import Select from 'react-select'
 import { post } from 'axios'
 import Auth from './lib/Auth'
+import SunEditor from "suneditor-react"
+import 'suneditor/dist/css/suneditor.min.css'
 
 class NewQuestion extends React.Component {
   state = {
@@ -29,6 +31,11 @@ class NewQuestion extends React.Component {
     this.setState({ data })
   }
 
+  handleChangeEditor = (content) => {
+    const data = { ...this.state.data, text: content }
+    this.setState({ data })
+  }
+
   handleSubmit = async (e) => {
     e.preventDefault()
     try {
@@ -43,6 +50,7 @@ class NewQuestion extends React.Component {
 
   render() {
     const { data } = this.state
+    console.log(data)
     return (
       <div className="section">
         <div className="columns">
@@ -53,6 +61,7 @@ class NewQuestion extends React.Component {
                 <label className="label">Title</label>
                 <div className="control">
                   <input
+                    required={true}
                     className="input"
                     type="text"
                     placeholder="Title"
@@ -62,23 +71,28 @@ class NewQuestion extends React.Component {
                 </div>
               </div>
 
-              <div className="field">
-                <label className="label">Text</label>
-                <div className="control">
-                  <textarea
-                    className="input"
-                    type="text"
-                    placeholder="Text"
-                    name="text"
-                    onChange={this.handleChange}
-                    value={data.text} />
-                </div>
-              </div>
+              <SunEditor
+                onChange={this.handleChangeEditor}
+                required="True"
+                lang="en"
+                placeholder="Type your question here"
+                setOptions={{
+                  height: 200,
+                  buttonList: [
+                    ['undo', 'redo'],
+                    ['font', 'fontSize', 'formatBlock'],
+                    ['paragraphStyle'],
+                    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                    ['fontColor', 'hiliteColor', 'textStyle']
+                  ]
+                }}
+              />
 
               <div className="field">
                 <label className="label">Language(s)</label>
                 <div className="control">
                   <Select
+                    required={true}
                     options={this.options}
                     isMulti
                     onChange={this.handdleMultiChange}

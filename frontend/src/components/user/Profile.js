@@ -87,7 +87,7 @@ class Profile extends React.Component {
     return (
       <div className="section">
         <h1 className="title">Profile</h1>
-        <img src={userData.image} alt={userData.username} />
+        <img className="image is-128x128" src={userData.image} alt={userData.username} />
         <p>Username: {userData.username}</p>
         {userData.languages.length > 1 ?
           <p>Languages:</p>
@@ -116,7 +116,7 @@ class Profile extends React.Component {
         {/* buddy */}
         <h1 className="title">Buddy</h1>
         <p>Username:  <Link to={`/profile/${userData.buddy.id}`}>{userData.buddy.username}</Link></p>
-        <img src={userData.buddy.image} alt={userData.buddy.username} />
+        <img className="image is-128x128" src={userData.buddy.image} alt={userData.buddy.username} />
         {buddyLangArr.length > 1 ?
           <p>Languages:</p>
           :

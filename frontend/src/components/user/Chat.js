@@ -3,17 +3,36 @@ import axios from 'axios'
 import moment from 'moment'
 import Auth from '../lib/Auth'
 
+import SunEditor from "suneditor-react"
+import 'suneditor/dist/css/suneditor.min.css'
+import parse from 'html-react-parser'
+
 class Chat extends React.Component {
   state = {
     messageData: {
       text: '',
+      submitted: false
     },
     currentUser: '',
     chatData: {
       owner: '',
       receiver: '',
       messages: []
-    }
+    },
+    intervalId: null
+  }
+
+
+  componentDidMount() {
+    const currentUser = Auth.getPayload().sub
+    this.setState({ currentUser })
+    this.getChat()
+    const intervalId = setInterval(() => this.getChat(), 3000)
+    this.setState({ intervalId })
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId)
   }
 
   getChat = async () => {
@@ -22,6 +41,8 @@ class Chat extends React.Component {
         { headers: { Authorization: `Bearer ${Auth.getToken()}` } }
       )
       this.setState({ chatData: data })
+      const messageData = { ...this.state.messageData, submitted: false }
+      this.setState({ messageData })
     } catch (err) {
       console.log(err)
     }
@@ -32,13 +53,18 @@ class Chat extends React.Component {
     this.setState({ messageData })
   }
 
+  handleChangeEditor = (content) => {
+    const messageData = { ...this.state.messageData, text: content }
+    this.setState({ messageData })
+  }
+
   handleSubmit = async (e) => {
     e.preventDefault()
     try {
       await axios.post(`/api/chats/${this.props.match.params.id}/messages/`, this.state.messageData,
         { headers: { Authorization: `Bearer ${Auth.getToken()}` } }
       )
-      const messageData = { ...this.state.messageData, text: '' }
+      const messageData = { ...this.state.messageData, text: '', submitted: true }
       this.setState({ messageData })
       this.getChat()
     } catch (err) {
@@ -48,7 +74,6 @@ class Chat extends React.Component {
 
   handleDeleteChat = async (e) => {
     e.preventDefault()
-    console.log(this.state.chatData.id)
     try {
       await axios.delete(`/api/chats/${this.state.chatData.id}/`, {
         headers: { Authorization: `Bearer ${Auth.getToken()}` }
@@ -59,53 +84,56 @@ class Chat extends React.Component {
     }
   }
 
-  componentDidMount() {
-    const currentUser = Auth.getPayload().sub
-    this.setState({ currentUser })
-    this.getChat()
-  }
-
   render() {
     const { messageData, chatData, currentUser } = this.state
     return (
       <div className="section">
-        {chatData.owner.id === currentUser || chatData.receiver.id === currentUser
-          ?
-          <button onClick={this.handleDeleteChat} className="button is-danger">Delete</button>
-          :
-          null}
-        <h1 className="title">{chatData.owner.id === currentUser ? `Chat with ${chatData.receiver.username}`
-          : `Chat with ${chatData.owner.username}`}
-        </h1>
-        {chatData.messages.map(message => {
-          return (
-            <div className={message.owner === currentUser
+        <div className="columns">
+          <div className="column is-half is-offset-one-quarter">
+            {chatData.owner.id === currentUser || chatData.receiver.id === currentUser
               ?
-              `box has-text-right`
+              <button onClick={this.handleDeleteChat} className="button is-danger">Delete</button>
               :
-              `box has-text-left`}
-              key={message.id} >
-              <p className="is-size-7">{moment(message.created_at).calendar()}</p>
-              <p>{message.text}</p>
-            </div>
-          )
-        })
-        }
-        <form onSubmit={this.handleSubmit} className="form">
-          <div className="field">
-            <div className="control">
-              <input
+              null}
+            <h1 className="title">{chatData.owner.id === currentUser ? `Chat with ${chatData.receiver.username}`
+              : `Chat with ${chatData.owner.username}`}
+            </h1>
+            {chatData.messages.map(message => {
+              return (
+                <div className={message.owner === currentUser
+                  ?
+                  `box has-text-right`
+                  :
+                  `box has-text-left`}
+                  key={message.id} >
+                  <p className="is-size-7">{moment(message.created_at).calendar()}</p>
+                  <div>{parse(message.text)}</div>
+                </div>
+              )
+            })
+            }
+            <form onSubmit={this.handleSubmit} className="form">
+              <SunEditor
+                setContents={messageData.submitted ? '' : messageData.text}
+                onChange={this.handleChangeEditor}
                 required="True"
-                className="input"
-                type="text"
-                placeholder="Type a message"
-                name="text"
-                onChange={this.handleChange}
-                value={messageData.text} />
-            </div>
-          </div>
-          <button className="button">Send</button>
-        </form>
+                lang="en"
+                placeholder="Type your answer here"
+                setOptions={{
+                  height: 200,
+                  buttonList: [
+                    ['undo', 'redo'],
+                    ['font', 'fontSize', 'formatBlock'],
+                    ['paragraphStyle'],
+                    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                    ['fontColor', 'hiliteColor', 'textStyle']
+                  ]
+                }}
+              />
+              <button className="button">Send</button>
+            </form>
+          </div >
+        </div >
       </div >
     )
   }

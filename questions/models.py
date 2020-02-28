@@ -11,6 +11,8 @@ class Question(models.Model):
         User, related_name='questions', null=True, on_delete=models.CASCADE)
     languages = models.ManyToManyField(
         'languages.Language', related_name='questions')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
@@ -22,6 +24,8 @@ class Answer(models.Model):
     owner = models.ForeignKey(
         User, related_name='answers', null=True, on_delete=models.CASCADE)
     text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f'Comment {self.id} on {self.question}'
