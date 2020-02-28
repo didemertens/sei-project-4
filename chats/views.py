@@ -60,6 +60,7 @@ class MessageListView(APIView):
         if message.is_valid():
             message.save()
             chat = Chat.objects.get(pk=pk)
+            chat.save()
             serialized_chat = PopulatedChatSerializer(chat)
             return Response(serialized_chat.data, status=HTTP_201_CREATED)
 

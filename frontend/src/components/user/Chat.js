@@ -17,7 +17,8 @@ class Chat extends React.Component {
     chatData: {
       owner: '',
       receiver: '',
-      messages: []
+      messages: [],
+      updated_at: ''
     },
     intervalId: null
   }
@@ -86,6 +87,7 @@ class Chat extends React.Component {
 
   render() {
     const { messageData, chatData, currentUser } = this.state
+    console.log(chatData.updated_at)
     return (
       <div className="section">
         <div className="columns">

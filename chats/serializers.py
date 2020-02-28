@@ -32,4 +32,5 @@ class PopulatedChatSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chat
-        fields = ('id', 'owner', 'receiver', 'messages')
+        fields = ('id', 'owner', 'receiver', 'messages',
+                  'created_at', 'updated_at')
