@@ -67,7 +67,7 @@ class Index extends React.Component {
   render() {
     const { filterQuestions } = this.state
     return (
-      <div className="section">
+      <div className="section index-section is-fullheight-with-navbar">
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
 
