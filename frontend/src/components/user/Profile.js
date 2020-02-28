@@ -3,11 +3,12 @@ import axios from 'axios'
 import { Link, withRouter } from 'react-router-dom'
 import Auth from '../lib/Auth'
 
+
 class Profile extends React.Component {
   state = {
     currentUser: '',
     userData: {
-      'id': '',
+      id: '',
       username: '',
       email: '',
       image: '',
@@ -79,15 +80,33 @@ class Profile extends React.Component {
 
   render() {
     const { userData, currentUser } = this.state
-    const buddyLang = userData.buddy.languages
     let buddyLangArr = []
-    if (buddyLang) {
-      buddyLangArr = Object.values(buddyLang)
+    if (userData.buddy) {
+      const buddyLang = userData.buddy.languages
+      if (buddyLang) {
+        buddyLangArr = Object.values(buddyLang)
+      }
     }
     return (
       <div className="section">
         <h1 className="title">Profile</h1>
+
+
+        {currentUser === userData.id ?
+          <Link
+            to={{
+              pathname: `/profile/${userData.id}/edit/`,
+              state: {
+                userData: userData
+              }
+            }}
+            className="button">Change profile info
+          </Link>
+          :
+          null
+        }
         <img className="image is-128x128" src={userData.image} alt={userData.username} />
+
         <p>Username: {userData.username}</p>
         {userData.languages.length > 1 ?
           <p>Languages:</p>
@@ -114,22 +133,29 @@ class Profile extends React.Component {
         }
 
         {/* buddy */}
-        <h1 className="title">Buddy</h1>
-        <p>Username:  <Link to={`/profile/${userData.buddy.id}`}>{userData.buddy.username}</Link></p>
-        <img className="image is-128x128" src={userData.buddy.image} alt={userData.buddy.username} />
-        {buddyLangArr.length > 1 ?
-          <p>Languages:</p>
+        {userData.buddy
+          ?
+          <>
+            <h1 className="title">Buddy</h1>
+            <p>Username:  <Link to={`/profile/${userData.buddy.id}`}>{userData.buddy.username}</Link></p>
+            <img className="image is-128x128" src={userData.buddy.image} alt={userData.buddy.username} />
+            {buddyLangArr.length > 1 ?
+              <p>Languages:</p>
+              :
+              <p>Language:</p>
+            }
+            {buddyLangArr.map(language => {
+              return (
+                <p key={language.id}>{language.name}</p>
+              )
+            })}
+          </>
           :
-          <p>Language:</p>
+          <h1 className="is-size-5">Come back soon to meet your buddy!</h1>
         }
-        {buddyLangArr.map(language => {
-          return (
-            <p key={language.id}>{language.name}</p>
-          )
-        })}
 
         {/* chats */}
-        {currentUser === userData.id
+        {currentUser === userData.id && (userData.chats_from.length > 0 || userData.chats_with.length > 0)
           ?
           <div>
             <h1 className="title">My chats:</h1>

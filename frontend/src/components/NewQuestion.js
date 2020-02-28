@@ -17,7 +17,14 @@ class NewQuestion extends React.Component {
   options = [
     { value: 1, label: 'JavaScript' },
     { value: 2, label: 'Python' },
-    { value: 3, label: 'Ruby' }
+    { value: 3, label: 'Ruby' },
+    { value: 4, label: 'Java' },
+    { value: 5, label: 'C++' },
+    { value: 6, label: 'C#' },
+    { value: 7, label: 'Swift' },
+    { value: 8, label: 'Go' },
+    { value: 9, label: 'PHP' },
+    { value: 10, label: 'Scala' }
   ]
 
   handleChange = ({ target: { name, value } }) => {
@@ -50,7 +57,6 @@ class NewQuestion extends React.Component {
 
   render() {
     const { data } = this.state
-    console.log(data)
     return (
       <div className="section">
         <div className="columns">

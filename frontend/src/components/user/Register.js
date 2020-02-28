@@ -1,10 +1,11 @@
 import React from 'react'
 import Select from 'react-select'
 import { post } from 'axios'
+import ImageUpload from '../common/ImageUpload'
 
 class Register extends React.Component {
   state = {
-    data: {
+    formData: {
       username: '',
       email: '',
       password: '',
@@ -17,24 +18,31 @@ class Register extends React.Component {
   options = [
     { value: 1, label: 'JavaScript' },
     { value: 2, label: 'Python' },
-    { value: 3, label: 'Ruby' }
+    { value: 3, label: 'Ruby' },
+    { value: 4, label: 'Java' },
+    { value: 5, label: 'C++' },
+    { value: 6, label: 'C#' },
+    { value: 7, label: 'Swift' },
+    { value: 8, label: 'Go' },
+    { value: 9, label: 'PHP' },
+    { value: 10, label: 'Scala' }
   ]
 
   handleChange = ({ target: { name, value } }) => {
-    const data = { ...this.state.data, [name]: value }
-    this.setState({ data })
+    const formData = { ...this.state.formData, [name]: value }
+    this.setState({ formData })
   }
 
   handdleMultiChange = (selected) => {
     const languages = selected ? selected.map(item => item.value) : []
-    const data = { ...this.state.data, languages }
-    this.setState({ data })
+    const formData = { ...this.state.formData, languages }
+    this.setState({ formData })
   }
 
   handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await post('api/register', this.state.data)
+      await post('api/register', this.state.formData)
       this.props.history.push('/login')
     } catch (err) {
       console.log(err)
@@ -42,7 +50,7 @@ class Register extends React.Component {
   }
 
   render() {
-    const { data } = this.state
+    const { formData } = this.state
     return (
       <div className="section">
         <div className="columns">
@@ -59,7 +67,7 @@ class Register extends React.Component {
                     placeholder="Username"
                     name="username"
                     onChange={this.handleChange}
-                    value={data.username} />
+                    value={formData.username} />
                 </div>
               </div>
 
@@ -72,20 +80,21 @@ class Register extends React.Component {
                     placeholder="Email"
                     name="email"
                     onChange={this.handleChange}
-                    value={data.email} />
+                    value={formData.email} />
                 </div>
               </div>
 
               <div className="field">
                 <label className="label">Profile picture</label>
                 <div className="control">
-                  <input
-                    className="input"
-                    type="text"
-                    placeholder="Profile picture"
-                    name="image"
-                    onChange={this.handleChange}
-                    value={data.image} />
+                  {formData.image && <img className="reg-profile-image" src={formData.image} alt="Profile" />}
+                  <ImageUpload
+                    name="imageURL"
+                    handleChange={this.handleChange}
+                    fieldName="image"
+                    labelClassName="my-label-class"
+                    inputClassName="my-input-class"
+                  />
                 </div>
               </div>
 
@@ -109,7 +118,7 @@ class Register extends React.Component {
                     placeholder="Password"
                     name="password"
                     onChange={this.handleChange}
-                    value={data.password} />
+                    value={formData.password} />
                 </div>
               </div>
 
@@ -122,7 +131,7 @@ class Register extends React.Component {
                     placeholder="Password"
                     name="password_confirmation"
                     onChange={this.handleChange}
-                    value={data.password_confirmation} />
+                    value={formData.password_confirmation} />
                 </div>
               </div>
 

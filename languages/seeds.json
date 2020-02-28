@@ -1,0 +1,82 @@
+[
+{
+  "model": "languages.language",
+  "pk": 1,
+  "fields": {
+    "name": "JavaScript",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png"
+  }
+},
+{
+  "model": "languages.language",
+  "pk": 2,
+  "fields": {
+    "name": "Python",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1024px-Python-logo-notext.svg.png"
+  }
+},
+{
+  "model": "languages.language",
+  "pk": 3,
+  "fields": {
+    "name": "Ruby",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Ruby_logo.svg/1024px-Ruby_logo.svg.png"
+  }
+},
+{
+  "model": "languages.language",
+  "pk": 4,
+  "fields": {
+    "name": "Java",
+    "image": "https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/1200px-Java_programming_language_logo.svg.png"
+  }
+},
+{
+  "model": "languages.language",
+  "pk": 5,
+  "fields": {
+    "name": "C++",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png"
+  }
+},
+{
+  "model": "languages.language",
+  "pk": 6,
+  "fields": {
+    "name": "C#",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/C_Sharp_logo.svg/1200px-C_Sharp_logo.svg.png"
+  }
+},
+{
+  "model": "languages.language",
+  "pk": 7,
+  "fields": {
+    "name": "Swift",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Swift_logo.svg/1200px-Swift_logo.svg.png"
+  }
+},
+{
+  "model": "languages.language",
+  "pk": 8,
+  "fields": {
+    "name": "Go",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Go_Logo_Blue.svg/1200px-Go_Logo_Blue.svg.png"
+  }
+},
+{
+  "model": "languages.language",
+  "pk": 9,
+  "fields": {
+    "name": "PHP",
+    "image": "https://www.php.net/images/logos/new-php-logo.svg"
+  }
+},
+{
+  "model": "languages.language",
+  "pk": 10,
+  "fields": {
+    "name": "Scala",
+    "image": "https://www.scala-lang.org/resources/img/frontpage/scala-spiral.png"
+  }
+}
+]

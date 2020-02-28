@@ -66,6 +66,12 @@ class UserSerializer(serializers.ModelSerializer):
                   'password_confirmation', 'image', 'languages')
 
 
+class SnippetUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
 class PopulatedUserSerialzer(UserSerializer):
     buddy = BuddySerializer()
     chats_from = ChatsSerializer(many=True)

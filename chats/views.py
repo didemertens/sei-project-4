@@ -1,10 +1,10 @@
 # pylint: disable=no-member
+from .serializers import ChatSerializer, MessageSerializer, PopulatedChatSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_401_UNAUTHORIZED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from .models import Chat, Message
-from .serializers import ChatSerializer, MessageSerializer, PopulatedChatSerializer
 
 
 class ChatListView(APIView):

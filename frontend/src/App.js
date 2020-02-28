@@ -17,6 +17,7 @@ import NewQuestion from './components/NewQuestion'
 import Register from './components/user/Register'
 import Login from './components/user/Login'
 import Profile from './components/user/Profile'
+import ProfileEdit from './components/user/ProfileEdit'
 import Chat from './components/user/Chat'
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/questions/new" component={NewQuestion} />
           <Route path="/questions/:id" component={Detail} />
           <Route path="/questions" component={Index} />
+          <Route path="/profile/:id/edit" component={ProfileEdit} />
           <Route path="/profile/:id" component={Profile} />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />

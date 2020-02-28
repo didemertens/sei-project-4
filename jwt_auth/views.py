@@ -5,8 +5,9 @@ from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
 from django.conf import settings
-from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_202_ACCEPTED
-from .serializers import UserSerializer, PopulatedUserSerialzer
+from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_202_ACCEPTED, HTTP_401_UNAUTHORIZED
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .serializers import UserSerializer, PopulatedUserSerialzer, SnippetUserSerializer
 User = get_user_model()
 
 
@@ -56,6 +57,9 @@ class LoginView(APIView):
 
 
 class UserProfileView(APIView):
+
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
     def get_user(self, pk):
         try:
             return User.objects.get(pk=pk)
@@ -66,3 +70,16 @@ class UserProfileView(APIView):
         user = self.get_user(pk)
         ser_user = PopulatedUserSerialzer(user)
         return Response(ser_user.data)
+
+    def put(self, request, pk):
+        user = self.get_user(pk)
+        if user.id != request.user.id:
+            return Response(status=HTTP_401_UNAUTHORIZED)
+
+        ser_user = SnippetUserSerializer(user, data=request.data, partial=True)
+        if ser_user.is_valid():
+            ser_user.save()
+            serialized_user = UserSerializer(user)
+            return Response(serialized_user.data, status=HTTP_202_ACCEPTED)
+        print(ser_user.errors)
+        return Response(ser_user.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
