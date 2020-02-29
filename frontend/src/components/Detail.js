@@ -103,11 +103,13 @@ class Detail extends React.Component {
               <h1 className="title">{question.title}</h1>
               <p className="subtitle is-size-6">{moment(question.created_at).calendar()} by <Link to={`/profile/${question.owner.id}`}>
                 {question.owner.username}</Link></p>
-              {question.languages.map(language => (
-                <div key={language.id}>
-                  <img className="image is-24x24" src={language.image} alt="{language.name}" />
-                </div>
-              ))}
+              <div className="detail-languages">
+                {question.languages.map(language => (
+                  <div key={language.id}>
+                    <img className="image is-24x24" src={language.image} alt="{language.name}" />
+                  </div>
+                ))}
+              </div>
               <div>{parse(question.text)}</div>
             </div>
 
@@ -150,7 +152,7 @@ class Detail extends React.Component {
                       ]
                     }}
                   />
-                  <button className="button">Send</button>
+                  <button className="button is-warning">Send</button>
                 </form>
                 :
                 <h4>You need to be <Link to='/login'>logged</Link> in to answer this question!</h4>

@@ -3,6 +3,7 @@ import { get } from 'axios'
 import { Link } from 'react-router-dom'
 import Select from 'react-select'
 import Moment from 'moment'
+import parse from 'html-react-parser'
 
 class Index extends React.Component {
   state = {
@@ -71,7 +72,7 @@ class Index extends React.Component {
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
             <div className="has-text-right">
-              <Link to='/questions/new' className="button is-warning">Ask a question</Link>
+              <Link to='/questions/new' className="index-button button is-warning">Ask a question</Link>
             </div>
 
             <Select
@@ -85,15 +86,20 @@ class Index extends React.Component {
 
             {filterQuestions.map(question => {
               return (
-                <div className="box" key={question.id}>
-                  <Link to={`/questions/${question.id}`}><h5>{question.title}</h5></Link>
-                  {question.languages.map(language => {
-                    return (
-                      <div key={language.id} className="is-inline-flex">
-                        <img className="image is-24x24" alt={language.name} src={language.image} />
-                      </div>
-                    )
-                  })}
+                <div className="section question-section" key={question.id}>
+                  <Link to={`/questions/${question.id}`}>
+                    <div className="index-languages">
+                      {question.languages.map(language => {
+                        return (
+                          <div key={language.id} className="is-inline-flex">
+                            <img className="image index-image-languages" alt={language.name} src={language.image} />
+                          </div>
+                        )
+                      })}
+                    </div>
+                    <h5 className="index-question-title">{question.title}</h5>
+                    <p className="question-text">{parse(question.text)}</p>
+                  </Link>
                 </div>
               )
             })}

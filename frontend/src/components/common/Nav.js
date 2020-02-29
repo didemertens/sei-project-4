@@ -21,7 +21,6 @@ class Nav extends React.Component {
     try {
       const { data } = await axios.get(`/api/users/${Auth.getPayload().sub}/chats/`)
       this.setState({ unseenChat: data })
-      console.log(data)
     }
     catch (err) {
       console.log(err)
@@ -50,9 +49,9 @@ class Nav extends React.Component {
 
             {this.state.unseenChat
               ?
-              Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}/`} className="navbar-item">Profile <TiBell /></Link>
+              Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}`} className="navbar-item">Profile <TiBell /></Link>
               :
-              Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}/`} className="navbar-item">Profile</Link>
+              Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}`} className="navbar-item">Profile</Link>
             }
 
             {/* {Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}/`} className="navbar-item">Profile</Link>} */}

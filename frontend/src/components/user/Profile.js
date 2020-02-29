@@ -186,7 +186,7 @@ class Profile extends React.Component {
             {userData.chats_from.map(chat => {
               return (
                 <div key={chat.id}>
-                  <p>{chat.receiver.username}</p>
+                  <Link to={`/profile/${chat.receiver.id}`}>{chat.receiver.username}</Link>
 
                   {messages_from.chat === chat.id
                     ?
@@ -203,7 +203,7 @@ class Profile extends React.Component {
             {userData.chats_with.map(chat => {
               return (
                 <div key={chat.id}>
-                  <p>{chat.owner.username}</p>
+                  <Link to={`/profile/${chat.owner.id}`}>{chat.owner.username}</Link>
                   {messages_with.chat === chat.id
                     ?
                     <>

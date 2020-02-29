@@ -20,7 +20,7 @@ class Login extends React.Component {
     try {
       const { data } = await post('api/login', this.state.data)
       Auth.setToken(data.token)
-      this.props.history.push('/')
+      this.props.history.push(`profile/${Auth.getPayload().sub}`)
     } catch (err) {
       console.log(err)
     }
