@@ -7,15 +7,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 2.5rem);
+    height: 100vh;
   }
 
   .home-column-right {
+    margin-top: 80px;
     background-image: url('https://thumbs.dreamstime.com/z/woman-laptop-interacts-looking-thought-binacular-vector-cartoon-illsatration-global-monitoring-tiny-woman-giant-139155550.jpg');
     // background-image: url('https://thumbs.dreamstime.com/z/young-woman-laptop-sofa-living-room-works-studies-freelance-education-surf-internet-bright-illustration-interior-172399838.jpg');
     // background-image: url('https://thumbs.dreamstime.com/z/rear-side-view-smart-professional-woman-vector-cartoon-illustration-working-her-laptop-computer-136750118.jpg');
     background-repeat: no-repeat;
-    background-size: 100% 120%;
+    background-size: 100% 110%;
     transform: scaleX(-1);
   }
 }

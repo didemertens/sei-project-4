@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Select from 'react-select'
 import Moment from 'moment'
 import parse from 'html-react-parser'
+import ScrollUpButton from "react-scroll-up-button"
 
 class Index extends React.Component {
   state = {
@@ -69,6 +70,7 @@ class Index extends React.Component {
     const { filterQuestions } = this.state
     return (
       <div className="section index-section is-fullheight-with-navbar">
+        <ScrollUpButton />
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
             <div className="has-text-right">

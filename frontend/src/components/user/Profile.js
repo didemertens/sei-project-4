@@ -114,112 +114,141 @@ class Profile extends React.Component {
     }
     return (
       <div className="section">
-        <h1 className="title">Profile</h1>
 
-        {currentUser === userData.id ?
-          <Link
-            to={{
-              pathname: `/profile/${userData.id}/edit/`,
-              state: {
-                userData: userData
-              }
-            }}
-            className="button">Change profile info
+        <div className="columns is-multiline">
+          <div className="column is-2">
+            <h2 className="title">Profile</h2>
+          </div>
+          <div className="column is-4">
+            {currentUser === userData.id ?
+              <Link
+                to={{
+                  pathname: `/profile/${userData.id}/edit/`,
+                  state: {
+                    userData: userData
+                  }
+                }}
+                className="button">Change profile info
           </Link>
-          :
-          null
-        }
-        <img className="image is-128x128" src={userData.image} alt={userData.username} />
+              :
+              null
+            }
+            <img className="image is-128x128" src={userData.image} alt={userData.username} />
 
-        <p>Username: {userData.username}</p>
-        {userData.languages.length > 1 ?
-          <p>Languages:</p>
-          :
-          <p>Language:</p>
-        }
-        {userData.languages.map(language => {
-          return (
-            <p key={language.id}>{language.name}</p>
-          )
-        })}
-        {currentUser === userData.id
-          ?
-          <p>Email: {userData.email}</p>
-          :
-          null
-        }
-
-        {currentUser !== userData.id
-          ?
-          <button className="button" onClick={this.handleNewChat}>Chat</button>
-          :
-          null
-        }
-
-        {/* buddy */}
-        {userData.buddy
-          ?
-          <>
-            <h1 className="title">Buddy</h1>
-            <p>Username:  <Link to={`/profile/${userData.buddy.id}`}>{userData.buddy.username}</Link></p>
-            <img className="image is-128x128" src={userData.buddy.image} alt={userData.buddy.username} />
-            {buddyLangArr.length > 1 ?
+            <p>Username: {userData.username}</p>
+            {userData.languages.length > 1 ?
               <p>Languages:</p>
               :
               <p>Language:</p>
             }
-            {buddyLangArr.map(language => {
+            {userData.languages.map(language => {
               return (
                 <p key={language.id}>{language.name}</p>
               )
             })}
-          </>
-          :
-          <h1 className="is-size-5">Come back soon to meet your buddy!</h1>
-        }
+            {currentUser === userData.id
+              ?
+              <p>Email: {userData.email}</p>
+              :
+              null
+            }
 
-        {/* chats */}
-        {currentUser === userData.id && (userData.chats_from.length > 0 || userData.chats_with.length > 0)
-          ?
-          <div>
-            <h1 className="title">My chats:</h1>
-            {userData.chats_from.map(chat => {
-              return (
-                <div key={chat.id}>
-                  <Link to={`/profile/${chat.receiver.id}`}>{chat.receiver.username}</Link>
-
-                  {messages_from.chat === chat.id
-                    ?
-                    <>
-                      <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
-                      <TiBell />
-                    </>
-                    :
-                    <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
-                  }
-                </div>
-              )
-            })}
-            {userData.chats_with.map(chat => {
-              return (
-                <div key={chat.id}>
-                  <Link to={`/profile/${chat.owner.id}`}>{chat.owner.username}</Link>
-                  {messages_with.chat === chat.id
-                    ?
-                    <>
-                      <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
-                      <TiBell />
-                    </>
-                    :
-                    <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
-                  }
-                </div>
-              )
-            })}
+            {currentUser !== userData.id
+              ?
+              <button className="button" onClick={this.handleNewChat}>Chat</button>
+              :
+              null
+            }
           </div>
-          :
-          null
-        }
+
+          <div className="column is-2">
+            <h2 className="title">Chats</h2>
+          </div>
+
+          <div className="column is-4">
+            {/* chats */}
+            {currentUser === userData.id && (userData.chats_from.length > 0 || userData.chats_with.length > 0)
+              ?
+              <div>
+
+                {userData.chats_from.map(chat => {
+                  return (
+                    <div key={chat.id}>
+                      <Link to={`/profile/${chat.receiver.id}`}>{chat.receiver.username}</Link>
+
+                      {messages_from.chat === chat.id
+                        ?
+                        <>
+                          <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
+                          <TiBell />
+                        </>
+                        :
+                        <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
+                      }
+                    </div>
+                  )
+                })}
+                {userData.chats_with.map(chat => {
+                  return (
+                    <div key={chat.id}>
+                      <Link to={`/profile/${chat.owner.id}`}>{chat.owner.username}</Link>
+                      {messages_with.chat === chat.id
+                        ?
+                        <>
+                          <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
+                          <TiBell />
+                        </>
+                        :
+                        <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
+                      }
+                    </div>
+                  )
+                })}
+              </div>
+              :
+              null
+            }
+          </div>
+          <div className="column is-2">
+            <h2 className="title">Buddy</h2>
+          </div>
+          <div className="column is-4">
+            {/* buddy */}
+            {userData.buddy
+              ?
+              <>
+                <p>Username:  <Link to={`/profile/${userData.buddy.id}`}>{userData.buddy.username}</Link></p>
+                <img className="image is-128x128" src={userData.buddy.image} alt={userData.buddy.username} />
+                {buddyLangArr.length > 1 ?
+                  <p>Languages:</p>
+                  :
+                  <p>Language:</p>
+                }
+                {buddyLangArr.map(language => {
+                  return (
+                    <p key={language.id}>{language.name}</p>
+                  )
+                })}
+              </>
+              :
+              <h2 className="is-size-5">Come back soon to meet your buddy!</h2>
+            }
+          </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
     )
   }

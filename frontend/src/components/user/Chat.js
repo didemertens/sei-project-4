@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import Auth from '../lib/Auth'
+import { TiDelete } from "react-icons/ti";
 
 import SunEditor from "suneditor-react"
 import 'suneditor/dist/css/suneditor.min.css'
@@ -23,17 +24,24 @@ class Chat extends React.Component {
     intervalId: null
   }
 
-
   componentDidMount() {
     const currentUser = Auth.getPayload().sub
     this.setState({ currentUser })
     this.getChat()
-    const intervalId = setInterval(() => this.getChat(), 3000)
+    const intervalId = setInterval(() => this.getChat(), 30000)
     this.setState({ intervalId })
   }
 
   componentWillUnmount() {
     clearInterval(this.state.intervalId)
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom()
+  }
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ block: "end" })
   }
 
   getChat = async () => {
@@ -87,53 +95,64 @@ class Chat extends React.Component {
 
   render() {
     const { messageData, chatData, currentUser } = this.state
-    // console.log(chatData)
     return (
-      <div className="section">
-        <div className="columns">
-          <div className="column is-half is-offset-one-quarter">
-            {chatData.owner.id === currentUser || chatData.receiver.id === currentUser
-              ?
-              <button onClick={this.handleDeleteChat} className="button is-danger">Delete</button>
-              :
-              null}
-            <h1 className="title">{chatData.owner.id === currentUser ? `Chat with ${chatData.receiver.username}`
-              : `Chat with ${chatData.owner.username}`}
-            </h1>
-            {chatData && chatData.messages.map(message => {
-              return (
-                <div className={message.owner === currentUser
+      <div className="section chat-whole-section">
+        <div>
+          <div className="columns">
+            <div className="column is-half is-offset-one-quarter">
+              <div className="chat-header">
+                <h2 className="title">{chatData.owner.id === currentUser ? `Chat with ${chatData.receiver.username}`
+                  : `Chat with ${chatData.owner.username}`}
+                </h2>
+                {chatData.owner.id === currentUser || chatData.receiver.id === currentUser
                   ?
-                  `box has-text-right`
+                  <TiDelete className="chat-delete-btn" onClick={this.handleDeleteChat} />
                   :
-                  `box has-text-left`}
-                  key={message.id} >
-                  <p className="is-size-7">{moment(message.created_at).calendar()}</p>
-                  <div>{parse(message.text)}</div>
-                </div>
-              )
-            })
-            }
-            <form onSubmit={this.handleSubmit} className="form">
-              <SunEditor
-                setContents={messageData.submitted ? '' : messageData.text}
-                onChange={this.handleChangeEditor}
-                required="True"
-                lang="en"
-                placeholder="Type your answer here"
-                setOptions={{
-                  height: 200,
-                  buttonList: [
-                    ['undo', 'redo'],
-                    ['font', 'fontSize', 'formatBlock'],
-                    ['paragraphStyle'],
-                    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-                    ['fontColor', 'hiliteColor', 'textStyle']
-                  ]
-                }}
-              />
-              <button className="button">Send</button>
-            </form>
+                  null}
+              </div>
+              <div className="chat-section">
+                {chatData && chatData.messages.map(message => {
+                  return (
+                    <div className={message.owner.id === currentUser
+                      ?
+                      `box chat-box has-text-right chat-text-owner`
+                      :
+                      `box chat-box has-text-left chat-text-receiver`}
+                      key={message.id} >
+                      <img className={message.owner.id === currentUser ? "image is-24x24 is-pulled-right" : "image is-24x24 is-pulled-left"} src={message.owner.image} alt={message.owner.username} />
+                      <p className="is-size-7">{moment(message.created_at).calendar()}</p>
+                      <div>{parse(message.text)}</div>
+                    </div>
+                  )
+                })
+                }
+                <div ref={(el) => { this.messagesEnd = el; }}></div>
+              </div>
+            </div>
+          </div>
+          <div className="columns">
+            <div className="column is-half is-offset-one-quarter">
+              <form onSubmit={this.handleSubmit} className="form">
+                <SunEditor
+                  setContents={messageData.submitted ? '' : messageData.text}
+                  onChange={this.handleChangeEditor}
+                  required="True"
+                  lang="en"
+                  placeholder="Type your answer here"
+                  setOptions={{
+                    height: 100,
+                    buttonList: [
+                      ['undo', 'redo'],
+                      ['font', 'fontSize', 'formatBlock'],
+                      ['paragraphStyle'],
+                      ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                      ['fontColor', 'hiliteColor', 'textStyle']
+                    ]
+                  }}
+                />
+                <button className="button is-warning">Send</button>
+              </form>
+            </div>
           </div >
         </div >
       </div >

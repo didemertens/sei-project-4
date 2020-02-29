@@ -35,7 +35,7 @@ class Nav extends React.Component {
   render() {
     const userId = Auth.getPayload()
     return (
-      <nav className="navbar is-primary is-fixed">
+      <nav className="navbar is-primary is-fixed-top">
         <div className="navbar-menu">
           <div className="navbar-brand">
             <Link to="/" className="navbar-item">Home</Link>
