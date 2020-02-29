@@ -26,3 +26,11 @@ class Message(models.Model):
 
     def __str__(self):
         return f'Message from {self.owner}'
+
+
+class Notification(models.Model):
+    chat = models.ForeignKey(
+        Chat, related_name='notifications', null=True, on_delete=models.CASCADE)
+    receiver = models.ForeignKey(
+        User, related_name='notifications', null=True, on_delete=models.CASCADE)
+    unseen_chat = models.BooleanField(default=False)

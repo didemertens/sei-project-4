@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Link, withRouter } from 'react-router-dom'
+import { TiBell } from "react-icons/ti"
 import Auth from '../lib/Auth'
 
 
@@ -16,17 +17,41 @@ class Profile extends React.Component {
       languages: [],
       chats_from: [],
       chats_with: []
-    }
+    },
+    messages_with: {},
+    messages_from: {}
   }
 
   getUserData = async () => {
     try {
-      const { data } = await axios.get(`/api/users/${this.props.match.params.id}`)
+      const { data } = await axios.get(`/api/users/${this.props.match.params.id}`,
+        { headers: { Authorization: `Bearer ${Auth.getToken()}` } })
       this.setState({ userData: data })
+      this.checkMessagesChats(data)
     }
     catch (err) {
       console.log(err)
     }
+  }
+
+  checkMessagesChats = (data) => {
+    data.chats_with.forEach(chat => {
+      chat.notifications.forEach(notification => {
+        if (notification.receiver === this.state.currentUser) {
+          const messages_with = { ...this.state.messages_with, chat: chat.id }
+          this.setState({ messages_with })
+        }
+      })
+    })
+
+    data.chats_from.forEach(chat => {
+      chat.notifications.forEach(notification => {
+        if (notification.receiver === this.state.currentUser) {
+          const messages_from = { ...this.state.messages_from, chat: chat.id }
+          this.setState({ messages_from })
+        }
+      })
+    })
   }
 
   handleClick = (chatId) => {
@@ -79,7 +104,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { userData, currentUser } = this.state
+    const { userData, currentUser, messages_with, messages_from } = this.state
     let buddyLangArr = []
     if (userData.buddy) {
       const buddyLang = userData.buddy.languages
@@ -90,7 +115,6 @@ class Profile extends React.Component {
     return (
       <div className="section">
         <h1 className="title">Profile</h1>
-
 
         {currentUser === userData.id ?
           <Link
@@ -163,7 +187,16 @@ class Profile extends React.Component {
               return (
                 <div key={chat.id}>
                   <p>{chat.receiver.username}</p>
-                  <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
+
+                  {messages_from.chat === chat.id
+                    ?
+                    <>
+                      <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
+                      <TiBell />
+                    </>
+                    :
+                    <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
+                  }
                 </div>
               )
             })}
@@ -171,7 +204,15 @@ class Profile extends React.Component {
               return (
                 <div key={chat.id}>
                   <p>{chat.owner.username}</p>
-                  <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
+                  {messages_with.chat === chat.id
+                    ?
+                    <>
+                      <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
+                      <TiBell />
+                    </>
+                    :
+                    <button className="button" onClick={() => this.handleClick(chat.id)}>Chat</button>
+                  }
                 </div>
               )
             })}

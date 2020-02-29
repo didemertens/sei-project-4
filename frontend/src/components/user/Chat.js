@@ -87,7 +87,7 @@ class Chat extends React.Component {
 
   render() {
     const { messageData, chatData, currentUser } = this.state
-    console.log(chatData.updated_at)
+    // console.log(chatData)
     return (
       <div className="section">
         <div className="columns">
@@ -100,7 +100,7 @@ class Chat extends React.Component {
             <h1 className="title">{chatData.owner.id === currentUser ? `Chat with ${chatData.receiver.username}`
               : `Chat with ${chatData.owner.username}`}
             </h1>
-            {chatData.messages.map(message => {
+            {chatData && chatData.messages.map(message => {
               return (
                 <div className={message.owner === currentUser
                   ?

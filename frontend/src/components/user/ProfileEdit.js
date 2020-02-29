@@ -52,7 +52,7 @@ class ProfileEdit extends React.Component {
 
 
   handdleMultiChange = (selected) => {
-    const languages = selected ? selected.map(item => item.value) : []
+    const languages = selected ? selected.map(item => item) : []
     const userData = { ...this.state.userData, languages }
     this.setState({ userData })
 
@@ -69,12 +69,12 @@ class ProfileEdit extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault()
-    const { userData } = this.state
+    const { userData, langOptions } = this.state
 
     const sendData = {
       username: userData.username,
       email: userData.email,
-      languages: userData.languages,
+      languages: langOptions.map(language => language.value),
       image: userData.image
     }
 
@@ -90,6 +90,7 @@ class ProfileEdit extends React.Component {
 
   render() {
     const { userData, langOptions } = this.state
+    console.log(userData)
     return (
       <div className="section">
         <form onSubmit={this.handleSubmit} className="form">

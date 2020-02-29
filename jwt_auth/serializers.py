@@ -1,3 +1,4 @@
+from chats.models import Notification
 from chats.models import Chat
 from languages.models import Language
 from rest_framework import serializers
@@ -23,6 +24,12 @@ class BuddySerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'image', 'languages')
 
 
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = '__all__'
+
+
 class ChatUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -32,6 +39,16 @@ class ChatUserSerializer(serializers.ModelSerializer):
 class ChatsSerializer(serializers.ModelSerializer):
     receiver = ChatUserSerializer()
     owner = ChatUserSerializer()
+
+    class Meta:
+        model = Chat
+        fields = '__all__'
+
+
+class PopulatedChatsSerializer(serializers.ModelSerializer):
+    receiver = ChatUserSerializer()
+    owner = ChatUserSerializer()
+    notifications = NotificationSerializer(many=True)
 
     class Meta:
         model = Chat
@@ -74,11 +91,11 @@ class SnippetUserSerializer(serializers.ModelSerializer):
 
 class PopulatedUserSerialzer(UserSerializer):
     buddy = BuddySerializer()
-    chats_from = ChatsSerializer(many=True)
-    chats_with = ChatsSerializer(many=True)
+    chats_from = PopulatedChatsSerializer(many=True)
+    chats_with = PopulatedChatsSerializer(many=True)
     languages = LanguageSerializer(many=True)
 
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'image',
-                  'buddy', 'languages', 'chats_from', 'chats_with')
+                  'buddy', 'languages', 'chats_from', 'chats_with', 'unseen_chat')

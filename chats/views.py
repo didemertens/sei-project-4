@@ -1,10 +1,13 @@
 # pylint: disable=no-member
-from .serializers import ChatSerializer, MessageSerializer, PopulatedChatSerializer
+from collections import OrderedDict
+from .serializers import ChatSerializer, MessageSerializer, PopulatedChatSerializer, NotificationSerializer, UpdateNotificationSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_401_UNAUTHORIZED, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-from .models import Chat, Message
+from .models import Chat, Message, Notification
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 class ChatListView(APIView):
@@ -26,12 +29,18 @@ class ChatDetailView(APIView):
     def get(self, request, pk):
         try:
             chat = Chat.objects.get(pk=pk)
+            user_id = request.user.id
 
-            if chat.owner.id != request.user.id and chat.receiver.id != request.user.id:
+            if chat.owner.id != user_id and chat.receiver.id != user_id:
                 return Response(status=HTTP_401_UNAUTHORIZED)
 
-            serialized_chat = PopulatedChatSerializer(chat)
-            return Response(serialized_chat.data)
+            chat.notifications.set(
+                Notification.objects.all().exclude(receiver=user_id))
+
+            ser_chat = PopulatedChatSerializer(
+                chat)
+
+            return Response(ser_chat.data, status=HTTP_202_ACCEPTED)
         except Chat.DoesNotExist:
             return Response({'message': 'Not Found'}, status=HTTP_404_NOT_FOUND)
 
@@ -54,14 +63,43 @@ class MessageListView(APIView):
     def post(self, request, pk):
         request.data['chat'] = pk
         request.data['owner'] = request.user.id
-
         message = MessageSerializer(data=request.data)
 
         if message.is_valid():
             message.save()
             chat = Chat.objects.get(pk=pk)
-            chat.save()
+
+            if chat.owner.id == request.user.id:
+                receiver = User.objects.get(pk=chat.receiver.id)
+                receiver.unseen_chat = True
+                receiver.save()
+                notifyData = {
+                    'chat': chat.id,
+                    'unseen_chat': True,
+                    'receiver': receiver.id
+                }
+                notify = NotificationSerializer(data=notifyData)
+                if notify.is_valid():
+                    notify.save()
+                else:
+                    print(notify.errors)
+            else:
+                owner = User.objects.get(pk=chat.owner.id)
+                owner.unseen_chat = True
+                owner.save()
+                notifyData = {
+                    'chat': chat.id,
+                    'unseen_chat': True,
+                    'receiver': owner.id
+                }
+                notify = NotificationSerializer(data=notifyData)
+                if notify.is_valid():
+                    notify.save()
+                else:
+                    print(notify.errors)
+
             serialized_chat = PopulatedChatSerializer(chat)
+            # print(serialized_chat.data['unseen_message'])
             return Response(serialized_chat.data, status=HTTP_201_CREATED)
 
         return Response(message.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)

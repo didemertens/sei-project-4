@@ -70,6 +70,9 @@ class Index extends React.Component {
       <div className="section index-section is-fullheight-with-navbar">
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
+            <div className="has-text-right">
+              <Link to='/questions/new' className="button is-warning">Ask a question</Link>
+            </div>
 
             <Select
               className="basic-single"
@@ -79,9 +82,7 @@ class Index extends React.Component {
               onChange={this.handleChange}
             />
 
-            <div className="has-text-right">
-              <Link to='/questions/new' className="button is-warning">Ask a question</Link>
-            </div>
+
             {filterQuestions.map(question => {
               return (
                 <div className="box" key={question.id}>

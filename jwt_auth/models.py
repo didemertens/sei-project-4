@@ -9,3 +9,4 @@ class User(AbstractUser):
         "User", null=True, blank=True, on_delete=models.SET_NULL)
     languages = models.ManyToManyField(
         'languages.Language', related_name='users', blank=True)
+    unseen_chat = models.BooleanField(default=False)

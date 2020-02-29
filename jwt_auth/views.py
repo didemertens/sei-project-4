@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 import jwt
 from datetime import datetime, timedelta
 from rest_framework.views import APIView
@@ -68,6 +69,11 @@ class UserProfileView(APIView):
 
     def get(self, request, pk):
         user = self.get_user(pk)
+
+        if pk == request.user.id:
+            user.unseen_chat = False
+            user.save()
+
         ser_user = PopulatedUserSerialzer(user)
         return Response(ser_user.data)
 
@@ -83,3 +89,18 @@ class UserProfileView(APIView):
             return Response(serialized_user.data, status=HTTP_202_ACCEPTED)
         print(ser_user.errors)
         return Response(ser_user.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+
+
+class UserChatView(APIView):
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
+    def get_user(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise PermissionDenied({'message': 'Not Found'})
+
+    def get(self, request, pk):
+        user = self.get_user(pk)
+        ser_user = PopulatedUserSerialzer(user)
+        return Response(ser_user.data['unseen_chat'])
