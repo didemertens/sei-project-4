@@ -90,60 +90,68 @@ class ProfileEdit extends React.Component {
 
   render() {
     const { userData, langOptions } = this.state
-    console.log(userData)
     return (
       <div className="section">
-        <form onSubmit={this.handleSubmit} className="form">
-
-          <div className="field">
-            <label className="label">Username</label>
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                placeholder="Username"
-                name="username"
-                onChange={this.handleChange}
-                value={userData.username} />
+        <div className="columns">
+          <div className="column is-half is-offset-one-quarter">
+            <div className="has-text-centered">
+              <h2 className="title">Edit your Profile</h2>
             </div>
-          </div>
+            <form onSubmit={this.handleSubmit} className="form">
+              <div className="field">
+                <label className="label">Username</label>
+                <div className="control">
+                  <input
+                    className="input"
+                    type="text"
+                    placeholder="Username"
+                    name="username"
+                    onChange={this.handleChange}
+                    value={userData.username} />
+                </div>
+              </div>
 
-          <div className="field">
-            <label className="label">Email</label>
-            <div className="control">
-              <input
-                className="input"
-                type="text"
-                placeholder="Email"
-                name="email"
-                onChange={this.handleChange}
-                value={userData.email} />
-            </div>
-          </div>
+              <div className="field">
+                <label className="label">Email</label>
+                <div className="control">
+                  <input
+                    className="input"
+                    type="text"
+                    placeholder="Email"
+                    name="email"
+                    onChange={this.handleChange}
+                    value={userData.email} />
+                </div>
+              </div>
 
-          <div className="field">
-            <label className="label">Language(s)</label>
-            <div className="control">
-              <Select
-                options={this.options}
-                value={langOptions}
-                isMulti
-                onChange={this.handdleMultiChange}
+              <div className="field">
+                <label className="label">Language(s)</label>
+                <div className="control">
+                  <Select
+                    options={this.options}
+                    value={langOptions}
+                    isMulti
+                    onChange={this.handdleMultiChange}
+                  />
+                </div>
+              </div>
+
+              <img className="image is-128x128" src={userData.image} alt={userData.username} />
+              <ImageUpload
+                name="image"
+                handleChange={this.handleChange}
+                fieldName="image"
+                labelClassName="my-label-class"
+                inputClassName="my-input-class"
               />
-            </div>
+
+              <div className="has-text-centered">
+                <button className="button is-warning">Save</button>
+              </div>
+            </form>
           </div>
+        </div>
 
-          <img className="image is-128x128" src={userData.image} alt={userData.username} />
-          <ImageUpload
-            name="image"
-            handleChange={this.handleChange}
-            fieldName="image"
-            labelClassName="my-label-class"
-            inputClassName="my-input-class"
-          />
-
-          <button className="button">Submit</button>
-        </form>
       </div >
     )
   }

@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import Auth from './lib/Auth'
+import { TiDelete, TiArrowLeftThick } from "react-icons/ti"
 
 import SunEditor from "suneditor-react"
 import 'suneditor/dist/css/suneditor.min.css'
@@ -82,7 +83,6 @@ class Detail extends React.Component {
 
   render() {
     const { question, answerData, currentUser } = this.state
-    // console.log(this.state)
     return (
       <div className="container detail-container">
         <div className="columns">
@@ -90,18 +90,18 @@ class Detail extends React.Component {
             <div className="section">
               <div className="columns">
                 <div className="column">
-                  <Link to='/questions' className="button is-warning">Back</Link>
+                  <Link to='/questions' className="button is-warning"><TiArrowLeftThick /> Questions</Link>
                 </div>
                 {question.owner.id === currentUser ?
                   <div className="column is-offset-8">
-                    <button onClick={this.handleDeleteQuestion} className="button is-danger">Delete</button>
+                    <TiDelete onClick={this.handleDeleteQuestion} className="detail-delete-answer"></TiDelete>
                   </div>
                   :
                   null
                 }
               </div>
               <h1 className="title">{question.title}</h1>
-              <p className="subtitle is-size-6">{moment(question.created_at).calendar()} by <Link to={`/profile/${question.owner.id}`}>
+              <p className="subtitle is-size-6">{moment(question.created_at).calendar()} by <Link className="detail-link-user" to={`/profile/${question.owner.id}`}>
                 {question.owner.username}</Link></p>
               <div className="detail-languages">
                 {question.languages.map(language => (
@@ -121,9 +121,11 @@ class Detail extends React.Component {
                   {question.answers.map(answer => {
                     return (
                       <div className="box" key={answer.id}>
-                        {answer.owner.id === currentUser && <button onClick={() => { this.handleDeleteAnswer(answer.id) }} className="button is-danger">Delete</button>}
+                        <div className="has-text-right">
+                          {answer.owner.id === currentUser && <TiDelete onClick={() => { this.handleDeleteAnswer(answer.id) }} className="detail-delete-answer"></TiDelete>}
+                        </div>
                         <p className="is-size-7 detail-text">{moment(answer.created_at).calendar()}</p>
-                        <Link to={`/profile/${answer.owner.id}`}><p>{answer.owner.username}</p></Link>
+                        <Link className="detail-link-user" to={`/profile/${answer.owner.id}`}><p>{answer.owner.username}</p></Link>
                         <div className="detail-text">{parse(answer.text)}</div>
                       </div>
                     )
@@ -136,7 +138,7 @@ class Detail extends React.Component {
               {Auth.isAuthenticated() ?
                 <form onSubmit={this.handleSubmit} className="form">
                   <SunEditor
-                    setContents={answerData.submitted ? '' : answerData.text}
+                    setContents={answerData.submitted ? 'Type your answer here' : ''}
                     onChange={this.handleChangeEditor}
                     required="True"
                     lang="en"

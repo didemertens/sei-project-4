@@ -55,13 +55,15 @@ class Register extends React.Component {
       <div className="section">
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
-            <h1 className="title">Register</h1>
+            <div className="has-text-centered">
+              <h1 className="title">Sign up</h1>
+            </div>
             <form onSubmit={this.handleSubmit} className="form">
-
               <div className="field">
                 <label className="label">Username</label>
                 <div className="control">
                   <input
+                    required={true}
                     className="input"
                     type="text"
                     placeholder="Username"
@@ -75,6 +77,7 @@ class Register extends React.Component {
                 <label className="label">Email</label>
                 <div className="control">
                   <input
+                    required={true}
                     className="input"
                     type="text"
                     placeholder="Email"
@@ -113,6 +116,7 @@ class Register extends React.Component {
                 <label className="label">Password</label>
                 <div className="control">
                   <input
+                    required={true}
                     className="input"
                     type="password"
                     placeholder="Password"
@@ -126,6 +130,7 @@ class Register extends React.Component {
                 <label className="label">Password confirmation</label>
                 <div className="control">
                   <input
+                    required={true}
                     className="input"
                     type="password"
                     placeholder="Password"
@@ -135,7 +140,9 @@ class Register extends React.Component {
                 </div>
               </div>
 
-              <button className="button">Submit</button>
+              <div className="has-text-centered">
+                <button className="button is-warning">Submit</button>
+              </div>
             </form>
 
           </div>

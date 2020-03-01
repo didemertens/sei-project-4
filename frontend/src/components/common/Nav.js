@@ -7,13 +7,20 @@ import { withRouter, Link } from 'react-router-dom'
 class Nav extends React.Component {
 
   state = {
-    unseenChat: ''
+    unseenChat: '',
+    navbarOpen: false
   }
 
   componentDidMount() {
     if (Auth.isAuthenticated()) {
       this.getUserData()
       setInterval(this.getUserData, 4000)
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.setState({ navbarOpen: false })
     }
   }
 
@@ -32,14 +39,24 @@ class Nav extends React.Component {
     this.props.history.push('/')
   }
 
+  toggleNav = () => {
+    this.setState({ navbarOpen: !this.state.navbarOpen })
+  }
+
   render() {
     const userId = Auth.getPayload()
+    const { navbarOpen } = this.state
     return (
       <nav className="navbar is-white is-fixed-top">
-        <div className="navbar-menu">
-          <div className="navbar-brand">
-            <Link id="navbar-item" to="/" className="navbar-item">Home</Link>
-          </div>
+        <div className="navbar-brand">
+          <Link id="navbar-item" to="/" className="navbar-item">Home</Link>
+          <a href='/#' onClick={this.toggleNav} role="button" id='navbar-burger' className={`navbar-burger ${navbarOpen ? 'is-active' : ''}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
+        </div>
+        <div className={`navbar-menu ${navbarOpen ? 'is-active' : ''}`} id='navbar-menu'>
           <div className="navbar-end">
             {!Auth.isAuthenticated() &&
               <>
@@ -51,10 +68,8 @@ class Nav extends React.Component {
               ?
               Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}`} id="navbar-profile" className="navbar-item">Profile <TiBell /></Link>
               :
-              Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}`} id="navbar-profile" className="navbar-item">Profile <TiBell className="is-hidden" /></Link>
+              Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}`} id="navbar-profile" className="navbar-item">Profile</Link>
             }
-
-            {/* {Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}/`} className="navbar-item">Profile</Link>} */}
             {Auth.isAuthenticated() && <a href="/" className="navbar-item" id="navbar-item" onClick={this.handleLogout}>Logout</a>}
           </div>
         </div>
@@ -62,5 +77,6 @@ class Nav extends React.Component {
     )
   }
 }
+
 
 export default withRouter(Nav)

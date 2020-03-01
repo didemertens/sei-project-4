@@ -61,7 +61,9 @@ class NewQuestion extends React.Component {
       <div className="section">
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
-            <h1 className="title">Ask a Question</h1>
+            <div className="has-text-centered">
+              <h1 className="title">Ask a Question</h1>
+            </div>
             <form className="form" onSubmit={this.handleSubmit}>
               <div className="field">
                 <label className="label">Title</label>
@@ -105,7 +107,9 @@ class NewQuestion extends React.Component {
                   />
                 </div>
               </div>
-              <button className="button is-warning">Submit</button>
+              <div className="has-text-centered">
+                <button className="button is-warning">Submit</button>
+              </div>
             </form>
           </div>
         </div>

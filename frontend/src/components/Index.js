@@ -5,6 +5,7 @@ import Select from 'react-select'
 import Moment from 'moment'
 import parse from 'html-react-parser'
 import ScrollUpButton from "react-scroll-up-button"
+import Auth from './lib/Auth'
 
 class Index extends React.Component {
   state = {
@@ -74,7 +75,12 @@ class Index extends React.Component {
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
             <div className="has-text-right">
-              <Link to='/questions/new' className="index-button button is-warning">Ask a question</Link>
+
+              {Auth.isAuthenticated() ?
+                <Link to='/questions/new' className="index-button button is-warning">Ask a question</Link>
+                :
+                <p className="is-size-7">Log in to ask a question</p>
+              }
             </div>
 
             <Select

@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import Auth from '../lib/Auth'
-import { TiDelete } from "react-icons/ti";
+import { TiDelete } from "react-icons/ti"
 
 import SunEditor from "suneditor-react"
 import 'suneditor/dist/css/suneditor.min.css'
@@ -119,7 +119,6 @@ class Chat extends React.Component {
                       :
                       `box chat-box has-text-left chat-text-receiver`}
                       key={message.id} >
-                      {/* <img className={message.owner.id === currentUser ? "image is-24x24 is-pulled-right" : "image is-24x24 is-pulled-left"} src={message.owner.image} alt={message.owner.username} /> */}
                       <p className="is-size-7">{moment(message.created_at).calendar()}</p>
                       <div>{parse(message.text)}</div>
                     </div>
@@ -134,7 +133,7 @@ class Chat extends React.Component {
             <div className="column is-8 is-offset-2 chat-editor">
               <form onSubmit={this.handleSubmit} className="form">
                 <SunEditor
-                  setContents={messageData.submitted ? '' : messageData.text}
+                  setContents={messageData.submitted ? 'Type your message here' : ''}
                   onChange={this.handleChangeEditor}
                   required="True"
                   lang="en"

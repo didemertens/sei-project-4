@@ -1,0 +1,38 @@
+.detail-container {
+  margin-top: 50px;
+}
+
+.detail-languages {
+  display: flex;
+  div {
+    padding: 5px;
+  }
+}
+
+.detail-text {
+  font-family: sans-serif;
+}
+
+.detail-button {
+  margin-top: 10px;
+}
+
+.detail-delete-answer {
+  cursor: pointer;
+  margin-left: 5px;
+  background-color: $yellow-img-color;
+  color: white;
+  border-radius: 100px;
+  font-size: 20px;
+
+  &:hover {
+    background-color: $dark-yellow-color;
+    color: white;
+    border-radius: 100px;
+    transform: scale(1.2);
+  }
+}
+
+.detail-link-user {
+  color: $dark-blue-color;
+}

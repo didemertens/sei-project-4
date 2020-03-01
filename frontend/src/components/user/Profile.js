@@ -127,15 +127,15 @@ class Profile extends React.Component {
     return (
       <div className="section profile-section">
         <div className="columns">
-          <div className="column is-4 profile-fixed-column is-offset-1">
+          <div className="column is-4 profile-fixed-column">
             {currentUser === userData.id ?
-              <h2><a href="#profile-user" className="title">You</a></h2>
+              <h2><a href="#profile-user" className="title is-size-6-mobile">You</a></h2>
               :
-              <h2><a href="#profile-user" className="title">User</a></h2>
+              <h2><a href="#profile-user" className="title is-size-6-mobile">User</a></h2>
             }
-            <h2><a href="#profile-buddy" className="title">Buddy</a></h2>
-            {currentUser === userData.id && <h2><a href="#profile-chats" className="title">Chats</a></h2>}
-            <h2><a href="#profile-questions" className="title">Questions</a></h2>
+            <h2><a href="#profile-buddy" className="title is-size-6-mobile">Buddy</a></h2>
+            {currentUser === userData.id && <h2><a href="#profile-chats" className="title is-size-6-mobile">Chats</a></h2>}
+            <h2><a href="#profile-questions" className="title is-size-6-mobile">Questions</a></h2>
           </div>
 
           <div className="column is-7 profile-column-right">
@@ -185,13 +185,12 @@ class Profile extends React.Component {
                         userData: userData
                       }
                     }}
-                    className=" button is-warning">Change profile info
+                    className=" button is-warning">Change profile
                     </Link>
                   :
                   null
                 }
               </div>
-
             </div>
 
             {/* buddy */}
@@ -248,8 +247,8 @@ class Profile extends React.Component {
                           {messages_from.chat === chat.id
                             ?
                             <div className="column">
-                              <button className="button is-warning" onClick={() => this.handleClick(chat.id)}>Chat</button>
-                              <TiBell />
+                              <button className="button is-warning" onClick={() => this.handleClick(chat.id)}>Chat <TiBell /></button>
+
                             </div>
                             :
                             <div className="column">
@@ -270,8 +269,7 @@ class Profile extends React.Component {
                           {messages_with.chat === chat.id
                             ?
                             <div className="column">
-                              <button className="button is-warning" onClick={() => this.handleClick(chat.id)}>Chat</button>
-                              <TiBell />
+                              <button className="button is-warning" onClick={() => this.handleClick(chat.id)}>Chat <TiBell /></button>
                             </div>
                             :
                             <div className="column">

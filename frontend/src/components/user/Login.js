@@ -31,14 +31,16 @@ class Login extends React.Component {
     return (
       <div className="section">
         <div className="columns">
-          <div className="column is-half is-offset-one-quarter">
-
-            <h1 className="title">Login</h1>
+          <div className="column is-4 is-offset-4">
+            <div className="has-text-centered">
+              <h1 className="title">Log in</h1>
+            </div>
             <form className="form" onSubmit={this.handleSubmit}>
               <div className="field">
                 <label className="label">Email</label>
                 <div className="control">
                   <input
+                    required={true}
                     className="input"
                     type="text"
                     placeholder="Email"
@@ -52,6 +54,7 @@ class Login extends React.Component {
                 <label className="label">Password</label>
                 <div className="control">
                   <input
+                    required={true}
                     className="input"
                     type="password"
                     placeholder="Password"
@@ -60,7 +63,10 @@ class Login extends React.Component {
                     value={data.password} />
                 </div>
               </div>
-              <button className="button">Submit</button>
+              <div className="has-text-centered">
+
+                <button className="button is-warning">Submit</button>
+              </div>
             </form>
 
           </div>

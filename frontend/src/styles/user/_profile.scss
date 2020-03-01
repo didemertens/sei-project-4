@@ -21,7 +21,18 @@
   }
 }
 
-#profile-buddy, #profile-chats, #profile-questions {
+#profile-buddy, #profile-chats {
+  margin-top: 50px;
+  border-top: 40px solid white;
+  a {
+    color: $dark-blue-color;
+    &:hover {
+      color: $black-color;
+    }
+  }
+}
+
+#profile-questions {
   margin-top: 50px;
   border-top: 40px solid white;
 }
