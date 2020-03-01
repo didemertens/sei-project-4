@@ -86,25 +86,21 @@ class Index extends React.Component {
             />
 
 
-            {filterQuestions.map(question => {
-              return (
-                <div className="section question-section" key={question.id}>
-                  <Link to={`/questions/${question.id}`}>
-                    <div className="index-languages">
-                      {question.languages.map(language => {
-                        return (
-                          <div key={language.id} className="is-inline-flex">
-                            <img className="image index-image-languages" alt={language.name} src={language.image} />
-                          </div>
-                        )
-                      })}
-                    </div>
-                    <h5 className="index-question-title">{question.title}</h5>
-                    <div className="question-text">{parse(question.text)}</div>
-                  </Link>
-                </div>
-              )
-            })}
+            {filterQuestions.map(question => (
+              <div className="section question-section" key={question.id}>
+                <Link to={`/questions/${question.id}`}>
+                  <div className="index-languages">
+                    {question.languages.map(language => (
+                      <div key={language.id} className="is-inline-flex">
+                        <img className="image index-image-languages" alt={language.name} src={language.image} />
+                      </div>
+                    ))}
+                  </div>
+                  <h5 className="index-question-title">{question.title}</h5>
+                  <div className="question-text">{parse(question.text)}</div>
+                </Link>
+              </div>
+            ))}
 
           </div>
         </div>

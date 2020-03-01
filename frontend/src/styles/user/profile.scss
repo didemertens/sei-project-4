@@ -2,22 +2,44 @@
 
 .profile-section {
   margin-top: 50px;
-  // min-height: 200vh;
+  min-height: 240vh;
 }
 
 #profile-user {
-  border-top:42px solid #fff;
+  border-top: 40px solid white;
+  .profile-user-top {
+    border-top: 40px solid $blue-img-color;
+    border-radius: 5px 5px 0 0;
+  }
+}
+
+.profile-user-languages, .profile-buddy-languages {
+  display: flex;
+  padding: 5px;
+  img {
+    margin-right: 4px;
+  }
 }
 
 #profile-buddy, #profile-chats, #profile-questions {
   margin-top: 50px;
-  border-top:42px solid #fff;
+  border-top: 40px solid white;
 }
 
+.profile-buddy-top, .profile-chats-top, .profile-questions-top {
+  border-top: 40px solid $blue-img-color;
+  border-radius: 5px 5px 0 0;
+}
 
 .profile-fixed-column {
   position: fixed;
   width: 100%;
+  h2 {
+    padding: 15px;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
 }
 
 .profile-column-right {
@@ -28,15 +50,13 @@
 .profile-question-box {
   padding: 15px;
   a {
-    color: $dark-blue-color;
-    &:visited {
-      color: $darker-blue-color;
-    }
+    color: $black-color;
   }
   &:hover {
     transform: scale(1.05);
-    a {
-      color: $black-color;
+    .question-arrow {
+      border-radius: 100px;
+      border: 2px solid black;
     }
   }
 }

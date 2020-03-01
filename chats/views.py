@@ -98,8 +98,8 @@ class MessageListView(APIView):
                 else:
                     print(notify.errors)
 
+            chat.save()
             serialized_chat = PopulatedChatSerializer(chat)
-            # print(serialized_chat.data['unseen_message'])
             return Response(serialized_chat.data, status=HTTP_201_CREATED)
 
         return Response(message.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)

@@ -119,7 +119,7 @@ class Chat extends React.Component {
                       :
                       `box chat-box has-text-left chat-text-receiver`}
                       key={message.id} >
-                      <img className={message.owner.id === currentUser ? "image is-24x24 is-pulled-right" : "image is-24x24 is-pulled-left"} src={message.owner.image} alt={message.owner.username} />
+                      {/* <img className={message.owner.id === currentUser ? "image is-24x24 is-pulled-right" : "image is-24x24 is-pulled-left"} src={message.owner.image} alt={message.owner.username} /> */}
                       <p className="is-size-7">{moment(message.created_at).calendar()}</p>
                       <div>{parse(message.text)}</div>
                     </div>
