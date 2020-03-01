@@ -1,3 +1,4 @@
+from questions.models import Question
 from chats.models import Notification
 from chats.models import Chat
 from languages.models import Language
@@ -42,6 +43,13 @@ class ChatsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Chat
+        fields = '__all__'
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Question
         fields = '__all__'
 
 
@@ -94,8 +102,9 @@ class PopulatedUserSerialzer(UserSerializer):
     chats_from = PopulatedChatsSerializer(many=True)
     chats_with = PopulatedChatsSerializer(many=True)
     languages = LanguageSerializer(many=True)
+    questions = QuestionSerializer(many=True)
 
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'image',
-                  'buddy', 'languages', 'chats_from', 'chats_with', 'unseen_chat')
+                  'buddy', 'languages', 'chats_from', 'chats_with', 'unseen_chat', 'questions')

@@ -100,7 +100,7 @@ class Index extends React.Component {
                       })}
                     </div>
                     <h5 className="index-question-title">{question.title}</h5>
-                    <p className="question-text">{parse(question.text)}</p>
+                    <div className="question-text">{parse(question.text)}</div>
                   </Link>
                 </div>
               )

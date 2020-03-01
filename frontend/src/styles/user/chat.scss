@@ -1,7 +1,8 @@
-@import 'colors';
+@import '../common/colors';
 
 .chat-whole-section {
   margin-top: 30px;
+  max-height: 90vh;
 }
 
 .chat-section {
@@ -43,6 +44,11 @@
   border-radius: 20px;
 }
 
-.Sun-editor {
-  border-radius: 50px;
+.chat-editor {
+  margin-top: -10px;
+  button {
+    // margin-left: 90%;
+    margin-top: 5px;
+  }
+
 }

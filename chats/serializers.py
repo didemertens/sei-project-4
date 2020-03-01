@@ -11,7 +11,21 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username')
 
 
+class PopulatedUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'image')
+
+
 class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = '__all__'
+
+
+class PopulatedMessageSerializer(serializers.ModelSerializer):
+    owner = PopulatedUserSerializer()
+
     class Meta:
         model = Message
         fields = '__all__'
@@ -38,7 +52,7 @@ class UpdateNotificationSerializer(serializers.ModelSerializer):
 
 
 class PopulatedChatSerializer(serializers.ModelSerializer):
-    messages = MessageSerializer(many=True)
+    messages = PopulatedMessageSerializer(many=True)
     receiver = UserSerializer()
     owner = UserSerializer()
     notifications = NotificationSerializer(many=True)

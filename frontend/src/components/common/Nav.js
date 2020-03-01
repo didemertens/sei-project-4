@@ -35,27 +35,27 @@ class Nav extends React.Component {
   render() {
     const userId = Auth.getPayload()
     return (
-      <nav className="navbar is-primary is-fixed-top">
+      <nav className="navbar is-white is-fixed-top">
         <div className="navbar-menu">
           <div className="navbar-brand">
-            <Link to="/" className="navbar-item">Home</Link>
+            <Link id="navbar-item" to="/" className="navbar-item">Home</Link>
           </div>
           <div className="navbar-end">
             {!Auth.isAuthenticated() &&
               <>
-                <Link to="/register" className="navbar-item">Sign up</Link>
-                <Link to="/login" className="navbar-item">Log in</Link>
+                <Link id="navbar-item" to="/register" className="navbar-item">Sign up</Link>
+                <Link id="navbar-profile" to="/login" className="navbar-item">Log in</Link>
               </>}
 
             {this.state.unseenChat
               ?
-              Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}`} className="navbar-item">Profile <TiBell /></Link>
+              Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}`} id="navbar-profile" className="navbar-item">Profile <TiBell /></Link>
               :
-              Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}`} className="navbar-item">Profile</Link>
+              Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}`} id="navbar-profile" className="navbar-item">Profile <TiBell className="is-hidden" /></Link>
             }
 
             {/* {Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}/`} className="navbar-item">Profile</Link>} */}
-            {Auth.isAuthenticated() && <a href="/" className="navbar-item" onClick={this.handleLogout}>Logout</a>}
+            {Auth.isAuthenticated() && <a href="/" className="navbar-item" id="navbar-item" onClick={this.handleLogout}>Logout</a>}
           </div>
         </div>
       </nav >

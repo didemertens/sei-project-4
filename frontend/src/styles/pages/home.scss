@@ -1,0 +1,20 @@
+.home-columns {
+  // background-color: #F2EEEF;
+
+  .home-column-left {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .home-column-right {
+    margin-top: 80px;
+    background-image: url('../../assets/binacular.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    transform: scaleX(-1);
+  }
+}

@@ -1,7 +1,7 @@
-@import 'colors';
+@import '../common/colors';
 
 .index-section {
-  // background-color: #F2EEEF;
+  margin-top: 50px;
   min-height: calc(100vh - 2.5rem);
   .index-button {
     margin-bottom: 10px;
@@ -9,14 +9,19 @@
 }
 
 .question-section {
+  margin-top: 20px;
   a {
+    color: black;
+  }
+  .index-question-title {
     color: black;
   }
   &:hover {
     transform: scale(1.05);
+    // background-color: $lighter-yellow-color;
     .index-question-title {
-      // text-transform: bolder;
       font-weight: 800;
+      // color: $dark-blue-color;
     }
   }
   .index-image-languages {
@@ -33,7 +38,8 @@
 }
 
 .index-question-title {
-  border-bottom: 3px solid $yellow-img-color;
+  // border-bottom: 3px solid $yellow-img-color;
+  border-bottom: 3px solid $black-color;
   font-size: 17px;
   font-weight: 600;
 }
@@ -44,4 +50,5 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: sans-serif;
 }

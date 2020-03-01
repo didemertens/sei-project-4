@@ -1,8 +1,10 @@
-@import 'home';
-@import 'index';
-@import 'detail';
-@import 'chat';
-
+@import './common/mystyles.scss';
+@import './pages/home.scss';
+@import './pages/index';
+@import './pages/detail';
+@import './user/chat';
+@import './pages/nav';
+@import './user/profile';
 
 body {
   margin: 0;

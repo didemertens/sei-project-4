@@ -1,0 +1,25 @@
+@import './colors';
+@import url('https://fonts.googleapis.com/css?family=Raleway:700&display=swap');
+
+$body-family: 'Raleway';
+$warning: $light-yellow-color;
+$body-color: $black-color;
+
+.button {
+  text-transform: uppercase;
+  border-radius: 0px !important;
+  border: 3px solid $black-color !important;
+}
+
+.button.is-warning {
+  background-color: $yellow-img-color !important;
+  &:hover {
+    color: white !important;
+  }
+  &:active {
+    transform: translateY(2px);
+  }
+}
+
+
+@import 'bulma';

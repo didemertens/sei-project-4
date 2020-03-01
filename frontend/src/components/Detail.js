@@ -84,7 +84,7 @@ class Detail extends React.Component {
     const { question, answerData, currentUser } = this.state
     // console.log(this.state)
     return (
-      <div className="container">
+      <div className="container detail-container">
         <div className="columns">
           <div className="column is-8 is-offset-2">
             <div className="section">
@@ -110,27 +110,27 @@ class Detail extends React.Component {
                   </div>
                 ))}
               </div>
-              <div>{parse(question.text)}</div>
+              <div className="detail-text">{parse(question.text)}</div>
             </div>
 
             {/* answers */}
-            <div className="section">
-              {question.answers.length > 0 &&
-                <>
+            {question.answers.length > 0 &&
+              <>
+                <div className="section">
                   <h5 className="title is-size-5">Answers:</h5>
                   {question.answers.map(answer => {
                     return (
                       <div className="box" key={answer.id}>
                         {answer.owner.id === currentUser && <button onClick={() => { this.handleDeleteAnswer(answer.id) }} className="button is-danger">Delete</button>}
-                        <p className="is-size-7">{moment(answer.created_at).calendar()}</p>
+                        <p className="is-size-7 detail-text">{moment(answer.created_at).calendar()}</p>
                         <Link to={`/profile/${answer.owner.id}`}><p>{answer.owner.username}</p></Link>
-                        <div>{parse(answer.text)}</div>
+                        <div className="detail-text">{parse(answer.text)}</div>
                       </div>
                     )
                   })}
-                </>
-              }
-            </div>
+                </div>
+              </>
+            }
 
             <div className="section">
               {Auth.isAuthenticated() ?
@@ -144,7 +144,7 @@ class Detail extends React.Component {
                     setOptions={{
                       height: 200,
                       buttonList: [
-                        ['undo', 'redo'],
+                        // ['undo', 'redo'],
                         ['font', 'fontSize', 'formatBlock'],
                         ['paragraphStyle'],
                         ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
@@ -152,7 +152,7 @@ class Detail extends React.Component {
                       ]
                     }}
                   />
-                  <button className="button is-warning">Send</button>
+                  <button className="button detail-button is-warning">Send</button>
                 </form>
                 :
                 <h4>You need to be <Link to='/login'>logged</Link> in to answer this question!</h4>

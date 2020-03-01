@@ -99,7 +99,7 @@ class Chat extends React.Component {
       <div className="section chat-whole-section">
         <div>
           <div className="columns">
-            <div className="column is-half is-offset-one-quarter">
+            <div className="column is-8 is-offset-2 ">
               <div className="chat-header">
                 <h2 className="title">{chatData.owner.id === currentUser ? `Chat with ${chatData.receiver.username}`
                   : `Chat with ${chatData.owner.username}`}
@@ -131,18 +131,18 @@ class Chat extends React.Component {
             </div>
           </div>
           <div className="columns">
-            <div className="column is-half is-offset-one-quarter">
+            <div className="column is-8 is-offset-2 chat-editor">
               <form onSubmit={this.handleSubmit} className="form">
                 <SunEditor
                   setContents={messageData.submitted ? '' : messageData.text}
                   onChange={this.handleChangeEditor}
                   required="True"
                   lang="en"
-                  placeholder="Type your answer here"
+                  placeholder="Type your message here"
                   setOptions={{
-                    height: 100,
+                    height: 50,
                     buttonList: [
-                      ['undo', 'redo'],
+                      // ['undo', 'redo'],
                       ['font', 'fontSize', 'formatBlock'],
                       ['paragraphStyle'],
                       ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],

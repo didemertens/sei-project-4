@@ -1,0 +1,42 @@
+@import '../common/colors';
+
+.profile-section {
+  margin-top: 50px;
+  // min-height: 200vh;
+}
+
+#profile-user {
+  border-top:42px solid #fff;
+}
+
+#profile-buddy, #profile-chats, #profile-questions {
+  margin-top: 50px;
+  border-top:42px solid #fff;
+}
+
+
+.profile-fixed-column {
+  position: fixed;
+  width: 100%;
+}
+
+.profile-column-right {
+  margin-left: 30vw;
+}
+
+
+.profile-question-box {
+  padding: 15px;
+  a {
+    color: $dark-blue-color;
+    &:visited {
+      color: $darker-blue-color;
+    }
+  }
+  &:hover {
+    transform: scale(1.05);
+    a {
+      color: $black-color;
+    }
+  }
+}

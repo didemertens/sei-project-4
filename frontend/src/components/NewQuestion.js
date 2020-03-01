@@ -61,7 +61,7 @@ class NewQuestion extends React.Component {
       <div className="section">
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
-            <h1>New Question</h1>
+            <h1 className="title">Ask a Question</h1>
             <form className="form" onSubmit={this.handleSubmit}>
               <div className="field">
                 <label className="label">Title</label>
@@ -105,7 +105,7 @@ class NewQuestion extends React.Component {
                   />
                 </div>
               </div>
-              <button className="button">Submit</button>
+              <button className="button is-warning">Submit</button>
             </form>
           </div>
         </div>
