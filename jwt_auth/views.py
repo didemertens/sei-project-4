@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_202_ACCEPTED, HTTP_401_UNAUTHORIZED
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from .serializers import UserSerializer, PopulatedUserSerialzer, SnippetUserSerializer
+from .serializers import UserSerializer, PopulatedUserSerializer, SnippetUserSerializer
 User = get_user_model()
 
 
@@ -74,7 +74,7 @@ class UserProfileView(APIView):
             user.unseen_chat = False
             user.save()
 
-        ser_user = PopulatedUserSerialzer(user)
+        ser_user = PopulatedUserSerializer(user)
         return Response(ser_user.data)
 
     def put(self, request, pk):
@@ -101,5 +101,5 @@ class UserChatView(APIView):
 
     def get(self, request, pk):
         user = self.get_user(pk)
-        ser_user = PopulatedUserSerialzer(user)
+        ser_user = PopulatedUserSerializer(user)
         return Response(ser_user.data['unseen_chat'])

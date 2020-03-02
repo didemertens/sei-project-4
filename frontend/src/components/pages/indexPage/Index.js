@@ -88,65 +88,69 @@ class Index extends React.Component {
   render() {
     const { filterQuestions, searchQuestions } = this.state
     return (
-      <div className="section index-section is-fullheight-with-navbar">
-        <h1 data-testid='title'>Index</h1>
+      <div data-testid='indexContainer' className="section index-section is-fullheight-with-navbar">
         <ScrollUpButton />
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
             <div className="has-text-right">
               {Auth.isAuthenticated() ?
-                <Link to='/questions/new' className="index-button button is-warning">Ask a question</Link>
+                <Link data-testid='create-btn' to='/questions/new' className="index-button button is-warning">Ask a question</Link>
                 :
-                <p className="is-size-7">Log in to ask a question</p>
+                <p data-testid='no-create-btn' className="is-size-7">Log in to ask a question</p>
               }
             </div>
             <input
+              data-testid='searchBar'
               value={this.state.search}
               onChange={(e) => this.handleChangeSearch(e.target.value, filterQuestions)}
               className="input index-search-bar"
               placeholder="Search for a question"
               type="text" />
 
-            <Select
-              className="basic-single"
-              classNamePrefix="type"
-              defaultValue={this.filterOptions[0]}
-              options={this.filterOptions}
-              onChange={this.handleChange}
-            />
-            {searchQuestions.length > 0 ?
-              searchQuestions.map(question => (
-                <div className="section question-section" key={question.id}>
-                  <Link to={`/questions/${question.id}`}>
-                    <div className="index-languages">
-                      {question.languages.map(language => (
-                        <div key={language.id} className="is-inline-flex">
-                          <img className="image index-image-languages" alt={language.name} src={language.image} />
-                        </div>
-                      ))}
-                    </div>
-                    <h5 className="index-question-title">{question.title}</h5>
-                    <div className="question-text">{parse(question.text)}</div>
-                  </Link>
-                </div>
-              ))
-              :
-              filterQuestions.map(question => (
-                <div className="section question-section" key={question.id}>
-                  <Link to={`/questions/${question.id}`}>
-                    <div className="index-languages">
-                      {question.languages.map(language => (
-                        <div key={language.id} className="is-inline-flex">
-                          <img className="image index-image-languages" alt={language.name} src={language.image} />
-                        </div>
-                      ))}
-                    </div>
-                    <h5 className="index-question-title">{question.title}</h5>
-                    <div className="question-text">{parse(question.text)}</div>
-                  </Link>
-                </div>
-              ))
-            }
+            <div data-testid='filterBar'>
+              <Select
+                className="basic-single"
+                classNamePrefix="type"
+                defaultValue={this.filterOptions[0]}
+                options={this.filterOptions}
+                onChange={this.handleChange}
+              />
+            </div>
+            <div data-testid="questionSection">
+              {searchQuestions.length > 0 ?
+                searchQuestions.map(question => (
+                  <div className="section question-section" key={question.id}>
+                    <Link to={`/questions/${question.id}`}>
+                      <div className="index-languages">
+                        {question.languages.map(language => (
+                          <div key={language.id} className="is-inline-flex">
+                            <img className="image index-image-languages" alt={language.name} src={language.image} />
+                          </div>
+                        ))}
+                      </div>
+                      <h5 className="index-question-title">{question.title}</h5>
+                      <div className="question-text">{parse(question.text)}</div>
+                    </Link>
+                  </div>
+                ))
+                :
+                filterQuestions.map(question => (
+                  <div data-testid="visibleQuestion" className="section question-section" key={question.id}>
+                    <Link to={`/questions/${question.id}`}>
+                      <div className="index-languages">
+                        {question.languages.map(language => (
+                          <div key={language.id} className="is-inline-flex">
+                            <img className="image index-image-languages" alt={language.name} src={language.image} />
+                          </div>
+                        ))}
+                      </div>
+                      <h5 className="index-question-title">{question.title}</h5>
+                      <div className="question-text">{parse(question.text)}</div>
+                    </Link>
+                  </div>
+                ))
+              }
+            </div>
           </div>
         </div>
       </div>

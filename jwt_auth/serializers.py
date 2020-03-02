@@ -97,7 +97,7 @@ class SnippetUserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class PopulatedUserSerialzer(UserSerializer):
+class PopulatedUserSerializer(UserSerializer):
     buddy = BuddySerializer()
     chats_from = PopulatedChatsSerializer(many=True)
     chats_with = PopulatedChatsSerializer(many=True)
