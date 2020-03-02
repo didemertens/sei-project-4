@@ -90,13 +90,14 @@ class Index extends React.Component {
     return (
       <div data-testid='indexContainer' className="section index-section is-fullheight-with-navbar">
         <ScrollUpButton />
+        <h1 className="test-title">hello</h1>
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
             <div className="has-text-right">
               {Auth.isAuthenticated() ?
                 <Link data-testid='create-btn' to='/questions/new' className="index-button button is-warning">Ask a question</Link>
                 :
-                <p data-testid='no-create-btn' className="is-size-7">Log in to ask a question</p>
+                <p data-testid='no-create-btn' className="no-create-btn is-size-7">Log in to ask a question</p>
               }
             </div>
             <input
@@ -119,7 +120,7 @@ class Index extends React.Component {
             <div data-testid="questionSection">
               {searchQuestions.length > 0 ?
                 searchQuestions.map(question => (
-                  <div className="section question-section" key={question.id}>
+                  <div data-testid="visibleSearchQuestion" className="section question-section" key={question.id}>
                     <Link to={`/questions/${question.id}`}>
                       <div className="index-languages">
                         {question.languages.map(language => (
@@ -135,7 +136,7 @@ class Index extends React.Component {
                 ))
                 :
                 filterQuestions.map(question => (
-                  <div data-testid="visibleQuestion" className="section question-section" key={question.id}>
+                  <div data-testid="visibleFilterQuestion" className="visibleFilterQuestion section question-section" key={question.id}>
                     <Link to={`/questions/${question.id}`}>
                       <div className="index-languages">
                         {question.languages.map(language => (
