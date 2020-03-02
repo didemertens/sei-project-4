@@ -7,12 +7,13 @@ class Login extends React.Component {
     data: {
       email: '',
       password: ''
-    }
+    },
+    error: ''
   }
 
   handleChange = ({ target: { name, value } }) => {
     const data = { ...this.state.data, [name]: value }
-    this.setState({ data })
+    this.setState({ data, error: '' })
   }
 
   handleSubmit = async (e) => {
@@ -22,12 +23,13 @@ class Login extends React.Component {
       Auth.setToken(data.token)
       this.props.history.push(`profile/${Auth.getPayload().sub}`)
     } catch (err) {
+      this.setState({ error: err })
       console.log(err)
     }
   }
 
   render() {
-    const { data } = this.state
+    const { data, error } = this.state
     return (
       <div className="section">
         <div className="columns">
@@ -63,8 +65,9 @@ class Login extends React.Component {
                     value={data.password} />
                 </div>
               </div>
-              <div className="has-text-centered">
 
+              {error && <p className="is-size-7 error-message">Invalid credentials</p>}
+              <div className="has-text-centered">
                 <button className="button is-warning">Submit</button>
               </div>
             </form>

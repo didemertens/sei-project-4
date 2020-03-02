@@ -10,7 +10,7 @@ import './styles/main.scss'
 import Home from './components/Home'
 import Nav from './components/common/Nav'
 
-import Index from './components/Index'
+import Index from './components/pages/indexPage/Index'
 import Detail from './components/Detail'
 import NewQuestion from './components/NewQuestion'
 

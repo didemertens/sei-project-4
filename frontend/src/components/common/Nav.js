@@ -3,6 +3,7 @@ import Auth from '../lib/Auth'
 import axios from 'axios'
 import { TiBell } from "react-icons/ti"
 import { withRouter, Link } from 'react-router-dom'
+import logo from '../../assets/logo.png'
 
 class Nav extends React.Component {
 
@@ -49,7 +50,10 @@ class Nav extends React.Component {
     return (
       <nav className="navbar is-white is-fixed-top">
         <div className="navbar-brand">
-          <Link id="navbar-item" to="/" className="navbar-item">Home</Link>
+          <Link id="navbar-item" to="/" className="navbar-item">
+            <img className="image is-24x24 nav-image" src={logo} alt="Git Together logo" />
+            Git Together
+          </Link>
           <a href='/#' onClick={this.toggleNav} role="button" id='navbar-burger' className={`navbar-burger ${navbarOpen ? 'is-active' : ''}`}>
             <span></span>
             <span></span>

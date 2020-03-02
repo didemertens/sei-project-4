@@ -5,12 +5,15 @@ import Select from 'react-select'
 import Moment from 'moment'
 import parse from 'html-react-parser'
 import ScrollUpButton from "react-scroll-up-button"
-import Auth from './lib/Auth'
+import Auth from '../../lib/Auth'
 
 class Index extends React.Component {
   state = {
     questions: [],
-    filterQuestions: []
+    filterQuestions: [],
+    selected: '',
+    search: '',
+    searchQuestions: []
   }
 
   filterOptions = [
@@ -28,6 +31,11 @@ class Index extends React.Component {
     { value: 12, label: 'PHP' },
   ]
 
+
+  componentDidMount() {
+    this.getQuestions()
+  }
+
   getQuestions = async () => {
     try {
       const { data } = await get('api/questions')
@@ -39,16 +47,21 @@ class Index extends React.Component {
   }
 
   handleChange = (selected) => {
+    this.setState({ selected })
     if (selected.value === 1) {
       const filterQuestions = [...this.state.questions].sort((a, b) => {
         return new Moment(b.created_at).format('YYYYMMDDHHmmss') - new Moment(a.created_at).format('YYYYMMDDHHmmss')
       })
       this.setState({ filterQuestions })
+
+      this.handleChangeSearch(this.state.search, filterQuestions)
     } else if (selected.value === 2) {
       const filterQuestions = [...this.state.questions].sort((a, b) => {
         return new Moment(a.created_at).format('YYYYMMDDHHmmss') - new Moment(b.created_at).format('YYYYMMDDHHmmss')
       })
       this.setState({ filterQuestions })
+
+      this.handleChangeSearch(this.state.search, filterQuestions)
     } else {
       const filterQuestions = []
       this.state.questions.forEach(question => {
@@ -59,29 +72,40 @@ class Index extends React.Component {
         }
       })
       this.setState({ filterQuestions })
+      this.handleChangeSearch(this.state.search, filterQuestions)
     }
   }
 
-  componentDidMount() {
-    this.getQuestions()
+  handleChangeSearch = (search, questions) => {
+    this.setState({ search })
+    if (search.length === 0) {
+      this.setState({ searchQuestions: [] })
+    }
+    const searchQuestions = questions.filter(question => question.title.toLowerCase().includes(search.toLowerCase()))
+    this.setState({ searchQuestions })
   }
 
-
   render() {
-    const { filterQuestions } = this.state
+    const { filterQuestions, searchQuestions } = this.state
     return (
       <div className="section index-section is-fullheight-with-navbar">
+        <h1 data-testid='title'>Index</h1>
         <ScrollUpButton />
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
             <div className="has-text-right">
-
               {Auth.isAuthenticated() ?
                 <Link to='/questions/new' className="index-button button is-warning">Ask a question</Link>
                 :
                 <p className="is-size-7">Log in to ask a question</p>
               }
             </div>
+            <input
+              value={this.state.search}
+              onChange={(e) => this.handleChangeSearch(e.target.value, filterQuestions)}
+              className="input index-search-bar"
+              placeholder="Search for a question"
+              type="text" />
 
             <Select
               className="basic-single"
@@ -90,27 +114,41 @@ class Index extends React.Component {
               options={this.filterOptions}
               onChange={this.handleChange}
             />
-
-
-            {filterQuestions.map(question => (
-              <div className="section question-section" key={question.id}>
-                <Link to={`/questions/${question.id}`}>
-                  <div className="index-languages">
-                    {question.languages.map(language => (
-                      <div key={language.id} className="is-inline-flex">
-                        <img className="image index-image-languages" alt={language.name} src={language.image} />
-                      </div>
-                    ))}
-                  </div>
-                  <h5 className="index-question-title">{question.title}</h5>
-                  <div className="question-text">{parse(question.text)}</div>
-                </Link>
-              </div>
-            ))}
-
+            {searchQuestions.length > 0 ?
+              searchQuestions.map(question => (
+                <div className="section question-section" key={question.id}>
+                  <Link to={`/questions/${question.id}`}>
+                    <div className="index-languages">
+                      {question.languages.map(language => (
+                        <div key={language.id} className="is-inline-flex">
+                          <img className="image index-image-languages" alt={language.name} src={language.image} />
+                        </div>
+                      ))}
+                    </div>
+                    <h5 className="index-question-title">{question.title}</h5>
+                    <div className="question-text">{parse(question.text)}</div>
+                  </Link>
+                </div>
+              ))
+              :
+              filterQuestions.map(question => (
+                <div className="section question-section" key={question.id}>
+                  <Link to={`/questions/${question.id}`}>
+                    <div className="index-languages">
+                      {question.languages.map(language => (
+                        <div key={language.id} className="is-inline-flex">
+                          <img className="image index-image-languages" alt={language.name} src={language.image} />
+                        </div>
+                      ))}
+                    </div>
+                    <h5 className="index-question-title">{question.title}</h5>
+                    <div className="question-text">{parse(question.text)}</div>
+                  </Link>
+                </div>
+              ))
+            }
           </div>
         </div>
-
       </div>
     )
   }

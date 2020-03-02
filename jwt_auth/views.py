@@ -87,7 +87,6 @@ class UserProfileView(APIView):
             ser_user.save()
             serialized_user = UserSerializer(user)
             return Response(serialized_user.data, status=HTTP_202_ACCEPTED)
-        print(ser_user.errors)
         return Response(ser_user.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
 

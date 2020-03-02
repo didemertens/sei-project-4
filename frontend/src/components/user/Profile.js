@@ -21,7 +21,8 @@ class Profile extends React.Component {
       questions: []
     },
     messages_with: {},
-    messages_from: {}
+    messages_from: {},
+    newMessage: false
   }
 
   componentDidMount() {
@@ -65,7 +66,7 @@ class Profile extends React.Component {
       chat.notifications.forEach(notification => {
         if (notification.receiver === this.state.currentUser) {
           const messages_with = { ...this.state.messages_with, chat: chat.id }
-          this.setState({ messages_with })
+          this.setState({ messages_with, newMessage: true })
         }
       })
     })
@@ -74,7 +75,7 @@ class Profile extends React.Component {
       chat.notifications.forEach(notification => {
         if (notification.receiver === this.state.currentUser) {
           const messages_from = { ...this.state.messages_from, chat: chat.id }
-          this.setState({ messages_from })
+          this.setState({ messages_from, newMessage: true })
         }
       })
     })
@@ -116,7 +117,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { userData, currentUser, messages_with, messages_from } = this.state
+    const { userData, currentUser, messages_with, messages_from, newMessage } = this.state
     let buddyLangArr = []
     if (userData.buddy) {
       const buddyLang = userData.buddy.languages
@@ -125,7 +126,7 @@ class Profile extends React.Component {
       }
     }
     return (
-      <div className="section profile-section">
+      <section className="section profile-section" >
         <div className="columns">
           <div className="column is-4 profile-fixed-column">
             {currentUser === userData.id ?
@@ -134,7 +135,12 @@ class Profile extends React.Component {
               <h2><a href="#profile-user" className="title is-size-6-mobile">User</a></h2>
             }
             <h2><a href="#profile-buddy" className="title is-size-6-mobile">Buddy</a></h2>
-            {currentUser === userData.id && <h2><a href="#profile-chats" className="title is-size-6-mobile">Chats</a></h2>}
+            {currentUser === userData.id && newMessage
+              ?
+              <h2><a href="#profile-chats" className="title is-size-6-mobile">Chats <TiBell /> </a></h2>
+              :
+              currentUser === userData.id && <h2><a href="#profile-chats" className="title is-size-6-mobile">Chats</a></h2>
+            }
             <h2><a href="#profile-questions" className="title is-size-6-mobile">Questions</a></h2>
           </div>
 
@@ -283,27 +289,43 @@ class Profile extends React.Component {
                 </div>
               </div>
               :
-              null
+              < div id="profile-chats">
+                <div className="profile-chats-top">
+                  < div className="box">
+                    <p>No chats yet</p>
+                  </ div>
+                </ div>
+              </div>
             }
 
 
             {/* questions */}
-            <div id="profile-questions">
-              <div className="profile-questions-top"></div>
-              <div className="box">
-                {userData.questions.map(question => {
-                  return (
-                    <div className="profile-question-box" key={question.id}>
-                      <Link to={`/questions/${question.id}`}><div className="question-title">< TiArrowRightThick className="question-arrow"></TiArrowRightThick> {question.title}</div></Link>
-                      <p className="subtitle is-size-7">{Moment(question.created_at).calendar()}</p>
-                    </div>
-                  )
-                })}
+            {userData.questions.length > 0
+              ?
+              <div id="profile-questions">
+                <div className="profile-questions-top"></div>
+                <div className="box">
+                  {userData.questions.map(question => {
+                    return (
+                      <div className="profile-question-box" key={question.id}>
+                        <Link to={`/questions/${question.id}`}><div className="question-title">< TiArrowRightThick className="question-arrow"></TiArrowRightThick> {question.title}</div></Link>
+                        <p className="subtitle is-size-7">{Moment(question.created_at).calendar()}</p>
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
-            </div>
+              :
+              <div id="profile-questions">
+                <div className="profile-questions-top"></div>
+                <div className="box">
+                  <p>No questions yet</p>
+                </div>
+              </div>
+            }
           </div>
-        </div>
-      </div >
+        </div >
+      </section >
     )
   }
 }

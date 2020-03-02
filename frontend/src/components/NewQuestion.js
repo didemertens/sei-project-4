@@ -11,7 +11,8 @@ class NewQuestion extends React.Component {
       title: '',
       text: '',
       languages: []
-    }
+    },
+    error: ''
   }
 
   options = [
@@ -29,34 +30,36 @@ class NewQuestion extends React.Component {
 
   handleChange = ({ target: { name, value } }) => {
     const data = { ...this.state.data, [name]: value }
-    this.setState({ data })
+    this.setState({ data, error: '' })
   }
 
   handdleMultiChange = (selected) => {
     const languages = selected ? selected.map(item => item.value) : []
     const data = { ...this.state.data, languages }
-    this.setState({ data })
+    this.setState({ data, error: '' })
   }
 
   handleChangeEditor = (content) => {
     const data = { ...this.state.data, text: content }
-    this.setState({ data })
+    this.setState({ data, error: '' })
   }
 
   handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const { data } = await post('/api/questions/', this.state.data, {
-        headers: { Authorization: `Bearer ${Auth.getToken()}` }
-      })
+      const { data } = await post('/api/questions/', this.state.data,
+        {
+          headers: { Authorization: `Bearer ${Auth.getToken()}` }
+        })
       this.props.history.push(`/questions/${data.id}`)
     } catch (err) {
+      this.setState({ error: err })
       console.log(err)
     }
   }
 
   render() {
-    const { data } = this.state
+    const { data, error } = this.state
     return (
       <div className="section">
         <div className="columns">
@@ -107,6 +110,7 @@ class NewQuestion extends React.Component {
                   />
                 </div>
               </div>
+              {error && <p className="is-size-7 error-message">Please check if all fields are filled in correctly</p>}
               <div className="has-text-centered">
                 <button className="button is-warning">Submit</button>
               </div>

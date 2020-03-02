@@ -11,8 +11,9 @@ class Register extends React.Component {
       password: '',
       password_confirmation: '',
       image: '',
-      languages: []
-    }
+      languages: [],
+    },
+    error: ''
   }
 
   options = [
@@ -30,7 +31,7 @@ class Register extends React.Component {
 
   handleChange = ({ target: { name, value } }) => {
     const formData = { ...this.state.formData, [name]: value }
-    this.setState({ formData })
+    this.setState({ formData, error: '' })
   }
 
   handdleMultiChange = (selected) => {
@@ -45,12 +46,13 @@ class Register extends React.Component {
       await post('api/register', this.state.formData)
       this.props.history.push('/login')
     } catch (err) {
+      this.setState({ error: err })
       console.log(err)
     }
   }
 
   render() {
-    const { formData } = this.state
+    const { formData, error } = this.state
     return (
       <div className="section">
         <div className="columns">
@@ -90,7 +92,7 @@ class Register extends React.Component {
               <div className="field">
                 <label className="label">Profile picture</label>
                 <div className="control">
-                  {formData.image && <img className="reg-profile-image" src={formData.image} alt="Profile" />}
+                  {formData.image && <img className="reg-profile-image image is-96x96" src={formData.image} alt="Profile" />}
                   <ImageUpload
                     name="imageURL"
                     handleChange={this.handleChange}
@@ -140,6 +142,7 @@ class Register extends React.Component {
                 </div>
               </div>
 
+              {error && <p className="is-size-7 error-message">Please check if all fields are filled in correctly</p>}
               <div className="has-text-centered">
                 <button className="button is-warning">Submit</button>
               </div>

@@ -11,7 +11,7 @@ class JWTAuthentication(BasicAuthentication):
         header = request.headers.get('Authorization')
         if not header:
             return None
-        if header.startswith('Basic'):  # Add this line in
+        if header.startswith('Basic'):
             return None
         if not header.startswith('Bearer'):
             raise PermissionDenied({'message': 'Invalid authorization header'})
