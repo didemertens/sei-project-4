@@ -61,6 +61,10 @@ const Detail = ({ history, match }) => {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
     const getUser = () => {
       const currentUser = Auth.getPayload().sub
       setUser(currentUser)

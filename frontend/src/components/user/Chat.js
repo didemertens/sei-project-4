@@ -8,6 +8,7 @@ import SunEditor from "suneditor-react"
 import 'suneditor/dist/css/suneditor.min.css'
 import parse from 'html-react-parser'
 
+
 class Chat extends React.Component {
   state = {
     messageData: {
@@ -55,11 +56,6 @@ class Chat extends React.Component {
     } catch (err) {
       console.log(err)
     }
-  }
-
-  handleChange = ({ target: { name, value } }) => {
-    const messageData = { ...this.state.messageData, [name]: value }
-    this.setState({ messageData })
   }
 
   handleChangeEditor = (content) => {

@@ -8,6 +8,7 @@ import { options } from '../common/options'
 const ProfileEdit = ({ location, match, history }) => {
   const [userData, setUserData] = useState({})
   const [langOptions, setLangOptions] = useState([])
+  const [error, setError] = useState('')
 
   useEffect(() => {
     const data = location.state.userData
@@ -25,27 +26,31 @@ const ProfileEdit = ({ location, match, history }) => {
   }, [location.state.userData])
 
   const handleChange = ({ target: { name, value } }) => {
+    setError('')
     setUserData({ ...userData, [name]: value })
   }
 
   const handdleMultiChange = (selected) => {
+    setError('')
     const languages = selected ? selected.map(item => item) : []
     setUserData({ ...userData, languages })
 
     const langOptions = []
-    selected.forEach(language => {
-      options.forEach(option => {
-        if (option.value === language.value) {
-          langOptions.push(option)
-        }
+    if (selected) {
+      selected.forEach(language => {
+        options.forEach(option => {
+          if (option.value === language.value) {
+            langOptions.push(option)
+          }
+        })
       })
-    })
+    }
+
     setLangOptions(langOptions)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
     const sendData = {
       username: userData.username,
       email: userData.email,
@@ -53,12 +58,17 @@ const ProfileEdit = ({ location, match, history }) => {
       image: userData.image
     }
 
+    if (!sendData.languages.length) {
+      setError('Please fill in all the fields')
+      return
+    }
+
     try {
       await axios.put(`/api/users/${match.params.id}/`, sendData,
         { headers: { Authorization: `Bearer ${Auth.getToken()}` } })
       history.goBack()
     } catch (err) {
-      console.log(err)
+      setError('Please check if all fields are filled in correctly')
     }
   }
 
@@ -115,6 +125,7 @@ const ProfileEdit = ({ location, match, history }) => {
               labelClassName="my-label-class"
               inputClassName="my-input-class"
             />
+            {error && <p className="is-size-7 error-message">{error}</p>}
             <div className="has-text-centered">
               <button className="button is-warning">Save</button>
             </div>

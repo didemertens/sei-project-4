@@ -6,12 +6,10 @@ import SunEditor from "suneditor-react"
 import 'suneditor/dist/css/suneditor.min.css'
 import { options } from './common/options'
 
-
 const NewQuestion = ({ history }) => {
   const [data, setData] = useState({})
   const [text, setText] = useState({})
   const [error, setError] = useState('')
-
 
   const handleChange = ({ target: { name, value } }) => {
     setData({ ...data, [name]: value })

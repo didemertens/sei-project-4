@@ -29,8 +29,10 @@ class Index extends React.Component {
     { value: 10, label: 'C#' },
     { value: 11, label: 'Scala' },
     { value: 12, label: 'PHP' },
+    { value: 13, label: 'HTML' },
+    { value: 14, label: 'CSS' },
+    { value: 15, label: 'Other' }
   ]
-
 
   componentDidMount() {
     this.getQuestions()
