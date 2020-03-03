@@ -83,7 +83,6 @@ const ProfileEdit = ({ location, match, history }) => {
                 />
               </div>
             </div>
-
             <div className="field">
               <label className="label">Email</label>
               <div className="control">
@@ -97,7 +96,6 @@ const ProfileEdit = ({ location, match, history }) => {
                 />
               </div>
             </div>
-
             <div className="field">
               <label className="label">Language(s)</label>
               <div className="control">
@@ -109,7 +107,6 @@ const ProfileEdit = ({ location, match, history }) => {
                 />
               </div>
             </div>
-
             <img className="image is-128x128" src={userData.image} alt={userData.username} />
             <ImageUpload
               name="image"
@@ -118,14 +115,12 @@ const ProfileEdit = ({ location, match, history }) => {
               labelClassName="my-label-class"
               inputClassName="my-input-class"
             />
-
             <div className="has-text-centered">
               <button className="button is-warning">Save</button>
             </div>
           </form>
         </div>
       </div>
-
     </div >
   )
 }

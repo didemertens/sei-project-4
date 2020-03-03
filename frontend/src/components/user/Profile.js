@@ -39,7 +39,6 @@ class Profile extends React.Component {
     }
   }
 
-
   getUserData = async () => {
     try {
       const { data } = await axios.get(`/api/users/${this.props.match.params.id}`,
@@ -191,7 +190,7 @@ class Profile extends React.Component {
                       }
                     }}
                     className=" button is-warning">Change profile
-                    </Link>
+                </Link>
                   :
                   null
                 }
