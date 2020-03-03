@@ -94,7 +94,10 @@ class Detail extends React.Component {
                 </div>
                 {question.owner.id === currentUser ?
                   <div className="column is-offset-8">
-                    <TiDelete onClick={this.handleDeleteQuestion} className="detail-delete-answer"></TiDelete>
+                    <div className="detail-delete">
+                      <TiDelete onClick={this.handleDeleteQuestion} className="detail-delete-answer"></TiDelete>
+                      <p className="is-size-7 detail-delete-text">Delete question</p>
+                    </div>
                   </div>
                   :
                   null
@@ -122,7 +125,15 @@ class Detail extends React.Component {
                     return (
                       <div className="box" key={answer.id}>
                         <div className="has-text-right">
-                          {answer.owner.id === currentUser && <TiDelete onClick={() => { this.handleDeleteAnswer(answer.id) }} className="detail-delete-answer"></TiDelete>}
+                          {answer.owner.id === currentUser &&
+
+                            <div className="detail-delete">
+                              <TiDelete onClick={() => { this.handleDeleteAnswer(answer.id) }} className="detail-delete-answer"></TiDelete>
+                              <p className="is-size-7 detail-delete-text">Delete answer</p>
+                            </div>
+
+
+                          }
                         </div>
                         <p className="is-size-7 detail-text">{moment(answer.created_at).calendar()}</p>
                         <Link className="detail-link-user" to={`/profile/${answer.owner.id}`}><p>{answer.owner.username}</p></Link>
@@ -146,11 +157,9 @@ class Detail extends React.Component {
                     setOptions={{
                       height: 200,
                       buttonList: [
-                        // ['undo', 'redo'],
                         ['font', 'fontSize', 'formatBlock'],
-                        ['paragraphStyle'],
                         ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-                        ['fontColor', 'hiliteColor', 'textStyle']
+                        ['fontColor', 'hiliteColor']
                       ]
                     }}
                   />

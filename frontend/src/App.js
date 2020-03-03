@@ -7,6 +7,8 @@ import {
 import 'bulma'
 import './styles/main.scss'
 
+import SecureRoute from './components/lib/SecureRoute'
+
 import Home from './components/Home'
 import Nav from './components/common/Nav'
 
@@ -27,14 +29,14 @@ function App() {
         <Nav />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/questions/new" component={NewQuestion} />
+          <SecureRoute path="/questions/new" component={NewQuestion} />
           <Route path="/questions/:id" component={Detail} />
           <Route path="/questions" component={Index} />
-          <Route path="/profile/:id/edit" component={ProfileEdit} />
-          <Route path="/profile/:id" component={Profile} />
+          <SecureRoute path="/profile/:id/edit" component={ProfileEdit} />
+          <SecureRoute path="/profile/:id" component={Profile} />
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
-          <Route path="/chats/:id" component={Chat} />
+          <SecureRoute path="/chats/:id" component={Chat} />
         </Switch>
       </main>
     </Router>

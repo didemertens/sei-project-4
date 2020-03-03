@@ -3,7 +3,7 @@ import ImageUpload from '../common/ImageUpload'
 import axios from 'axios'
 import Auth from '../lib/Auth'
 import Select from 'react-select'
-
+import { options } from '../common/options'
 
 class ProfileEdit extends React.Component {
   state = {
@@ -16,19 +16,6 @@ class ProfileEdit extends React.Component {
     langOptions: []
   }
 
-  options = [
-    { value: 1, label: 'JavaScript' },
-    { value: 2, label: 'Python' },
-    { value: 3, label: 'Ruby' },
-    { value: 4, label: 'Java' },
-    { value: 5, label: 'C++' },
-    { value: 6, label: 'C#' },
-    { value: 7, label: 'Swift' },
-    { value: 8, label: 'Go' },
-    { value: 9, label: 'PHP' },
-    { value: 10, label: 'Scala' }
-  ]
-
   componentDidMount() {
     const userData = this.props.location.state.userData
     this.setState({ userData })
@@ -36,7 +23,7 @@ class ProfileEdit extends React.Component {
     const langOptions = [...this.state.langOptions]
 
     userData.languages.forEach(language => {
-      this.options.forEach(option => {
+      options.forEach(option => {
         if (option.value === language.id) {
           langOptions.push(option)
         }
@@ -58,7 +45,7 @@ class ProfileEdit extends React.Component {
 
     const langOptions = []
     selected.forEach(language => {
-      this.options.forEach(option => {
+      options.forEach(option => {
         if (option.value === language.value) {
           langOptions.push(option)
         }
@@ -128,7 +115,7 @@ class ProfileEdit extends React.Component {
                 <label className="label">Language(s)</label>
                 <div className="control">
                   <Select
-                    options={this.options}
+                    options={options}
                     value={langOptions}
                     isMulti
                     onChange={this.handdleMultiChange}

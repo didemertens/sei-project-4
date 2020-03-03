@@ -17,6 +17,12 @@
   margin-top: 10px;
 }
 
+.detail-delete {
+  .detail-delete-text {
+    visibility: hidden;
+    }
+}
+
 .detail-delete-answer {
   cursor: pointer;
   margin-left: 5px;
@@ -26,11 +32,15 @@
   font-size: 20px;
 
   &:hover {
-    background-color: $dark-yellow-color;
+    background-color: $red-color;
     color: white;
     border-radius: 100px;
     transform: scale(1.2);
   }
+}
+
+.detail-delete-answer:hover + .detail-delete-text {
+  visibility: visible;
 }
 
 .detail-link-user {

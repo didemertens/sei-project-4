@@ -145,7 +145,6 @@ class Profile extends React.Component {
           </div>
 
           <div className="column is-7 profile-column-right">
-
             {/* user */}
             <div id="profile-user">
               <div className="profile-user-top"></div>
@@ -198,7 +197,6 @@ class Profile extends React.Component {
                 }
               </div>
             </div>
-
             {/* buddy */}
             <div id="profile-buddy">
               <div className="profile-buddy-top"></div>
@@ -233,8 +231,6 @@ class Profile extends React.Component {
                 </div>
               </div>
             </div>
-
-
             {/* chats */}
             {currentUser === userData.id && (userData.chats_from.length > 0 || userData.chats_with.length > 0)
               ?
@@ -245,7 +241,6 @@ class Profile extends React.Component {
                     {userData.chats_from.map(chat => {
                       return (
                         <div key={chat.id} className="columns">
-                          {/* <div> */}
                           <div className="column">
                             <Link to={`/profile/${chat.receiver.id}`}>{chat.receiver.username}</Link>
                             <p className="is-size-7">Last message: {Moment(chat.updated_at).calendar()}</p>
@@ -261,7 +256,6 @@ class Profile extends React.Component {
                               <button className="button is-warning" onClick={() => this.handleClick(chat.id)}>Chat</button>
                             </div>
                           }
-                          {/* </div> */}
                         </div>
                       )
                     })}
@@ -289,6 +283,9 @@ class Profile extends React.Component {
                 </div>
               </div>
               :
+              null
+            }
+            {currentUser === userData.id && (!userData.chats_from.length && !userData.chats_with.length) ?
               < div id="profile-chats">
                 <div className="profile-chats-top">
                   < div className="box">
@@ -296,9 +293,8 @@ class Profile extends React.Component {
                   </ div>
                 </ div>
               </div>
+              : null
             }
-
-
             {/* questions */}
             {userData.questions.length > 0
               ?

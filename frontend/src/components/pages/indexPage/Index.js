@@ -38,7 +38,7 @@ class Index extends React.Component {
 
   getQuestions = async () => {
     try {
-      const { data } = await get('api/questions')
+      const { data } = await get('/api/questions')
       this.setState({ questions: data })
       this.handleChange(this.filterOptions[0])
     } catch (err) {
@@ -88,9 +88,8 @@ class Index extends React.Component {
   render() {
     const { filterQuestions, searchQuestions } = this.state
     return (
-      <div data-testid='indexContainer' className="section index-section is-fullheight-with-navbar">
+      <div className="section index-section is-fullheight-with-navbar">
         <ScrollUpButton />
-        <h1 className="test-title">hello</h1>
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
             <div className="has-text-right">
@@ -101,26 +100,22 @@ class Index extends React.Component {
               }
             </div>
             <input
-              data-testid='searchBar'
               value={this.state.search}
               onChange={(e) => this.handleChangeSearch(e.target.value, filterQuestions)}
               className="input index-search-bar"
               placeholder="Search for a question"
               type="text" />
-
-            <div data-testid='filterBar'>
-              <Select
-                className="basic-single"
-                classNamePrefix="type"
-                defaultValue={this.filterOptions[0]}
-                options={this.filterOptions}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div data-testid="questionSection">
+            <Select
+              className="basic-single"
+              classNamePrefix="type"
+              defaultValue={this.filterOptions[0]}
+              options={this.filterOptions}
+              onChange={this.handleChange}
+            />
+            <div className="question-section-main">
               {searchQuestions.length > 0 ?
                 searchQuestions.map(question => (
-                  <div data-testid="visibleSearchQuestion" className="section question-section" key={question.id}>
+                  <div className="section question-section" key={question.id}>
                     <Link to={`/questions/${question.id}`}>
                       <div className="index-languages">
                         {question.languages.map(language => (
@@ -129,24 +124,29 @@ class Index extends React.Component {
                           </div>
                         ))}
                       </div>
-                      <h5 className="index-question-title">{question.title}</h5>
-                      <div className="question-text">{parse(question.text)}</div>
+                      <div className="searchQuestionDetail">
+                        <h5 className="index-question-title">{question.title}</h5>
+                        <div className="question-text">{parse(question.text)}</div>
+                      </div>
                     </Link>
                   </div>
                 ))
                 :
                 filterQuestions.map(question => (
-                  <div data-testid="visibleFilterQuestion" className="visibleFilterQuestion section question-section" key={question.id}>
+                  <div className="visibleFilterQuestion section question-section" key={question.id}>
                     <Link to={`/questions/${question.id}`}>
                       <div className="index-languages">
                         {question.languages.map(language => (
                           <div key={language.id} className="is-inline-flex">
                             <img className="image index-image-languages" alt={language.name} src={language.image} />
                           </div>
-                        ))}
+                        )
+                        )}
                       </div>
-                      <h5 className="index-question-title">{question.title}</h5>
-                      <div className="question-text">{parse(question.text)}</div>
+                      <div className="filterQuestionDetail">
+                        <h5 className="index-question-title">{question.title}</h5>
+                        <div className="question-text">{parse(question.text)}</div>
+                      </div>
                     </Link>
                   </div>
                 ))

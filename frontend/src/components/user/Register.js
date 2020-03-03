@@ -2,6 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 import { post } from 'axios'
 import ImageUpload from '../common/ImageUpload'
+import { options } from '../common/options'
 
 class Register extends React.Component {
   state = {
@@ -15,19 +16,6 @@ class Register extends React.Component {
     },
     error: ''
   }
-
-  options = [
-    { value: 1, label: 'JavaScript' },
-    { value: 2, label: 'Python' },
-    { value: 3, label: 'Ruby' },
-    { value: 4, label: 'Java' },
-    { value: 5, label: 'C++' },
-    { value: 6, label: 'C#' },
-    { value: 7, label: 'Swift' },
-    { value: 8, label: 'Go' },
-    { value: 9, label: 'PHP' },
-    { value: 10, label: 'Scala' }
-  ]
 
   handleChange = ({ target: { name, value } }) => {
     const formData = { ...this.state.formData, [name]: value }
@@ -107,7 +95,7 @@ class Register extends React.Component {
                 <label className="label">Language(s)</label>
                 <div className="control">
                   <Select
-                    options={this.options}
+                    options={options}
                     isMulti
                     onChange={this.handdleMultiChange}
                   />

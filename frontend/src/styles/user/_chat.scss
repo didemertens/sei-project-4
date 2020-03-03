@@ -14,22 +14,6 @@
   display: flex;
 }
 
-.chat-delete-btn {
-  cursor: pointer;
-  margin-left: 5px;
-  background-color: $yellow-img-color;
-  color: white;
-  border-radius: 100px;
-  font-size: 20px;
-
-  &:hover {
-    background-color: $dark-yellow-color;
-    color: white;
-    border-radius: 100px;
-    transform: scale(1.2);
-  }
-}
-
 .chat-text-owner {
   background-color: $light-yellow-color;
   margin-left: 10vw;
@@ -48,5 +32,35 @@
   button {
     margin-top: 5px;
   }
+}
 
+.delete-chat {
+  max-height: 30%;
+  margin-top: -30px;
+  display: flex;
+
+  .chat-delete-text {
+    visibility: hidden;
+    margin-left: 5px;
+    }
+}
+
+.chat-delete-btn {
+  cursor: pointer;
+  background-color: $yellow-img-color;
+  color: white;
+  border-radius: 100px;
+  font-size: 20px;
+
+  &:hover {
+      background-color: $red-color;
+      color: white;
+      border-radius: 100px;
+      transform: scale(1.2);
+  } 
+}
+
+
+.chat-delete-btn:hover + .chat-delete-text {
+  visibility: visible;
 }

@@ -78,5 +78,29 @@
       "name": "Scala",
       "image": "https://www.scala-lang.org/resources/img/frontpage/scala-spiral.png"
     }
+  },
+  {
+    "model": "languages.language",
+    "pk": 11,
+    "fields": {
+      "name": "HTML",
+      "image": "https://pngimage.net/wp-content/uploads/2018/06/html-logo-png-2.png"
+    }
+  },
+  {
+    "model": "languages.language",
+    "pk": 12,
+    "fields": {
+      "name": "CSS",
+      "image": "https://cdn.iconscout.com/icon/free/png-256/css-131-722685.png"
+    }
+  },
+  {
+    "model": "languages.language",
+    "pk": 13,
+    "fields": {
+      "name": "Other",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Code.svg/1200px-Code.svg.png"
+    }
   }
 ]

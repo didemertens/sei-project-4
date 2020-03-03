@@ -22,10 +22,8 @@
   }
   &:hover {
     transform: scale(1.05);
-    // background-color: $lighter-yellow-color;
     .index-question-title {
       font-weight: 800;
-      // color: $dark-blue-color;
     }
   }
   .index-image-languages {
@@ -42,7 +40,6 @@
 }
 
 .index-question-title {
-  // border-bottom: 3px solid $yellow-img-color;
   border-bottom: 3px solid $black-color;
   font-size: 17px;
   font-weight: 600;

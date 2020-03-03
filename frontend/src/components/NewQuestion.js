@@ -4,6 +4,7 @@ import { post } from 'axios'
 import Auth from './lib/Auth'
 import SunEditor from "suneditor-react"
 import 'suneditor/dist/css/suneditor.min.css'
+import { options } from './common/options'
 
 class NewQuestion extends React.Component {
   state = {
@@ -14,19 +15,6 @@ class NewQuestion extends React.Component {
     },
     error: ''
   }
-
-  options = [
-    { value: 1, label: 'JavaScript' },
-    { value: 2, label: 'Python' },
-    { value: 3, label: 'Ruby' },
-    { value: 4, label: 'Java' },
-    { value: 5, label: 'C++' },
-    { value: 6, label: 'C#' },
-    { value: 7, label: 'Swift' },
-    { value: 8, label: 'Go' },
-    { value: 9, label: 'PHP' },
-    { value: 10, label: 'Scala' }
-  ]
 
   handleChange = ({ target: { name, value } }) => {
     const data = { ...this.state.data, [name]: value }
@@ -90,11 +78,9 @@ class NewQuestion extends React.Component {
                 setOptions={{
                   height: 200,
                   buttonList: [
-                    ['undo', 'redo'],
                     ['font', 'fontSize', 'formatBlock'],
-                    ['paragraphStyle'],
                     ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-                    ['fontColor', 'hiliteColor', 'textStyle']
+                    ['fontColor', 'hiliteColor']
                   ]
                 }}
               />
@@ -104,7 +90,7 @@ class NewQuestion extends React.Component {
                 <div className="control">
                   <Select
                     required={true}
-                    options={this.options}
+                    options={options}
                     isMulti
                     onChange={this.handdleMultiChange}
                   />
@@ -123,10 +109,3 @@ class NewQuestion extends React.Component {
 }
 
 export default NewQuestion
-
-
-// {
-// 	"title": "Comment on Ruby2",
-// 	"text" : "jdjwej wkwek ewjjfjewjfjwe jfjw jjfjewjfjewj jwe",
-// 	"languages": [1,2]
-// }

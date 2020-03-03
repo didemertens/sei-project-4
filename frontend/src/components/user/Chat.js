@@ -106,7 +106,10 @@ class Chat extends React.Component {
                 </h2>
                 {chatData.owner.id === currentUser || chatData.receiver.id === currentUser
                   ?
-                  <TiDelete className="chat-delete-btn" onClick={this.handleDeleteChat} />
+                  <div className="delete-chat">
+                    <TiDelete className="chat-delete-btn" onClick={this.handleDeleteChat} />
+                    <p className="is-size-7 chat-delete-text">Delete chat</p>
+                  </div>
                   :
                   null}
               </div>
@@ -141,11 +144,9 @@ class Chat extends React.Component {
                   setOptions={{
                     height: 50,
                     buttonList: [
-                      // ['undo', 'redo'],
                       ['font', 'fontSize', 'formatBlock'],
-                      ['paragraphStyle'],
                       ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-                      ['fontColor', 'hiliteColor', 'textStyle']
+                      ['fontColor', 'hiliteColor']
                     ]
                   }}
                 />
