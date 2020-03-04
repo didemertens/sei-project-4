@@ -1,22 +1,23 @@
 .home-columns {
-
   .home-column-left {
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // height: 100vh;
   }
 
   .home-column-right {
     margin-top: 80px;
     transform: scaleX(-1);
+
+    img {
+      max-height: 580px;
+    }
   }
 }
 
 .home-title {
-  font-size: 3.8rem;
   text-transform: uppercase;
 }
 
@@ -73,10 +74,8 @@
   }
 }
 
-@media only screen and (max-width: 1025px) {
-  .home-column-right {
-    img {
-      margin-top: -40vh;
-    }
+@media only screen and (max-width: 1024px) {
+  .home-column-left {
+    margin-top: 20vh;
   }
 }

@@ -247,8 +247,8 @@ class Profile extends React.Component {
                           {messages_from.chat === chat.id
                             ?
                             <div className="column">
-                              <button className="button is-warning" onClick={() => this.handleClick(chat.id)}>Chat <TiBell /></button>
-
+                              <button className="button is-warning" onClick={() => this.handleClick(chat.id)}>Chat</button>
+                              <TiBell />
                             </div>
                             :
                             <div className="column">
@@ -268,7 +268,8 @@ class Profile extends React.Component {
                           {messages_with.chat === chat.id
                             ?
                             <div className="column">
-                              <button className="button is-warning" onClick={() => this.handleClick(chat.id)}>Chat <TiBell /></button>
+                              <button className="button is-warning" onClick={() => this.handleClick(chat.id)}>Chat</button>
+                              <TiBell />
                             </div>
                             :
                             <div className="column">

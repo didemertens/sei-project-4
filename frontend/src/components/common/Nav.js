@@ -63,14 +63,21 @@ class Nav extends React.Component {
         <div className={`navbar-menu ${navbarOpen ? 'is-active' : ''}`} id='navbar-menu'>
           <div className="navbar-end">
             {!Auth.isAuthenticated() &&
-              <>
+              <div className="tibell-box">
                 <Link id="navbar-item" to="/register" className="navbar-item">Sign up</Link>
                 <Link id="navbar-profile" to="/login" className="navbar-item">Log in</Link>
-              </>}
+              </div>}
 
             {this.state.unseenChat
               ?
-              Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}`} id="navbar-profile" className="navbar-item">Profile <TiBell /></Link>
+              Auth.isAuthenticated() &&
+                navbarOpen ?
+                <Link to={`/profile/${userId.sub}`} id="navbar-profile" className="navbar-item">Profile <TiBell /></Link>
+                :
+                <>
+                  <Link to={`/profile/${userId.sub}`} id="navbar-profile" className="navbar-item">Profile</Link>
+                  <TiBell className="tibell-nav" />
+                </>
               :
               Auth.isAuthenticated() && <Link to={`/profile/${userId.sub}`} id="navbar-profile" className="navbar-item">Profile</Link>
             }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Select from 'react-select'
 import { post } from 'axios'
 import Auth from './lib/Auth'
@@ -11,21 +11,9 @@ const NewQuestion = ({ history }) => {
   const [text, setText] = useState({})
   const [error, setError] = useState('')
 
-  const handleChange = ({ target: { name, value } }) => {
-    setData({ ...data, [name]: value })
-    setError(error, '')
-  }
-
-  const handdleMultiChange = (selected) => {
-    const languages = selected ? selected.map(item => item.value) : []
-    setData({ ...data, languages: languages })
-    setError(error, '')
-  }
-
-  const handleChangeEditor = (content) => {
-    setText({ ...text, text: content })
-    setError(error, '')
-  }
+  useEffect(() => {
+    setError('')
+  }, [data, text])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -33,7 +21,6 @@ const NewQuestion = ({ history }) => {
       ...data,
       ...text
     }
-
     try {
       const { data: { id } } = await post('/api/questions/', sendData,
         {
@@ -62,12 +49,12 @@ const NewQuestion = ({ history }) => {
                   type="text"
                   placeholder="Title"
                   name="title"
-                  onChange={handleChange}
+                  onChange={({ target: { name, value } }) => setData({ ...data, [name]: value })}
                 />
               </div>
             </div>
             <SunEditor
-              onChange={handleChangeEditor}
+              onChange={(content) => setText({ ...text, text: content })}
               required="True"
               lang="en"
               placeholder="Type your question here"
@@ -88,7 +75,10 @@ const NewQuestion = ({ history }) => {
                   required={true}
                   options={options}
                   isMulti
-                  onChange={handdleMultiChange}
+                  onChange={(selected) => {
+                    const languages = selected ? selected.map(item => item.value) : []
+                    setData({ ...data, languages: languages })
+                  }}
                 />
               </div>
             </div>

@@ -11,19 +11,26 @@ const ProfileEdit = ({ location, match, history }) => {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    const data = location.state.userData
-    const langOptions = []
-
-    data.languages.forEach(language => {
-      options.forEach(option => {
-        if (option.value === language.id) {
-          langOptions.push(option)
-        }
-      })
-    })
-    setUserData(data)
-    setLangOptions(langOptions)
-  }, [location.state.userData])
+    console.log('renders')
+    if (!location.state) {
+      history.push('/profiles/')
+    } else {
+      const getData = () => {
+        const data = location.state.userData
+        const langOptions = []
+        data.languages.forEach(language => {
+          options.forEach(option => {
+            if (option.value === language.id) {
+              langOptions.push(option)
+            }
+          })
+        })
+        setUserData(data)
+        setLangOptions(langOptions)
+      }
+      getData()
+    }
+  }, [history, location.state,])
 
   const handleChange = ({ target: { name, value } }) => {
     setError('')

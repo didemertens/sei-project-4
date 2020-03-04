@@ -11,6 +11,7 @@ import SecureRoute from './components/lib/SecureRoute'
 
 import Home from './components/Home'
 import Nav from './components/common/Nav'
+import Error from './components/common/Error'
 
 import Index from './components/pages/indexPage/Index'
 import Detail from './components/Detail'
@@ -37,10 +38,11 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
           <SecureRoute path="/chats/:id" component={Chat} />
+          <Route path='*' component={Error} />
         </Switch>
       </main>
     </Router>
-  );
+  )
 }
 
 export default App;

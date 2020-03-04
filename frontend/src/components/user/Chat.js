@@ -2,8 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import Auth from '../lib/Auth'
-import { TiDelete } from "react-icons/ti"
-
+import { TiDelete, TiArrowLeftThick } from "react-icons/ti"
 import SunEditor from "suneditor-react"
 import 'suneditor/dist/css/suneditor.min.css'
 import parse from 'html-react-parser'
@@ -93,7 +92,10 @@ class Chat extends React.Component {
     const { messageData, chatData, currentUser } = this.state
     return (
       <div className="section chat-whole-section">
-        <div>
+        <div className="container">
+          <div className="has-text-left">
+            <button className="button is-warning" onClick={() => this.props.history.goBack()}><TiArrowLeftThick /> Back</button>
+          </div>
           <div className="columns">
             <div className="column is-8 is-offset-2 ">
               <div className="chat-header">
