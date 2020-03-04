@@ -42,7 +42,8 @@ const Login = ({ history }) => {
                   placeholder="Email"
                   name="email"
                   onChange={handleChange}
-                  value={formData.email} />
+                  value={formData.email  || ''} 
+                  />
               </div>
             </div>
 
@@ -56,7 +57,8 @@ const Login = ({ history }) => {
                   placeholder="Password"
                   name="password"
                   onChange={handleChange}
-                  value={formData.password} />
+                  value={formData.password  || ''} 
+                  />
               </div>
             </div>
 

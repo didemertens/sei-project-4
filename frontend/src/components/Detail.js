@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
@@ -7,21 +7,30 @@ import { TiDelete, TiArrowLeftThick } from "react-icons/ti"
 import SunEditor from "suneditor-react"
 import 'suneditor/dist/css/suneditor.min.css'
 import parse from 'html-react-parser'
+import Moment from 'moment'
 
 const Detail = ({ history, match }) => {
   const [currentUser, setUser] = useState('')
   const [question, setQuestion] = useState({})
   const [answerData, setAnswer] = useState({})
+  const [sortedAnswers, sortAnswers] = useState([])
 
-  const getQuestion = async () => {
+  const getQuestion = useCallback(async () => {
     try {
       const { data } = await axios.get(`/api/questions/${match.params.id}`)
       setQuestion(data)
-      setAnswer({ ...answerData, submitted: false })
+
+      if (data.answers) {
+        const sortedAnswers = data.answers.sort((a, b) => {
+          return new Moment(a.created_at).format('YYYYMMDDHHmmss') - new Moment(b.created_at).format('YYYYMMDDHHmmss')
+        })
+        sortAnswers(sortedAnswers)
+      }
+
     } catch (err) {
       console.log(err)
     }
-  }
+  }, [match.params.id])
 
   const handleChangeEditor = (content) => {
     setAnswer({ ...answerData, text: content })
@@ -33,7 +42,8 @@ const Detail = ({ history, match }) => {
       await axios.post(`/api/questions/${match.params.id}/answers/`, answerData,
         { headers: { Authorization: `Bearer ${Auth.getToken()}` } }
       )
-      setAnswer({ ...answerData, text: '', submitted: true })
+      setAnswer({ ...answerData, text: '' })
+      setAnswer({ ...answerData, submitted: true })
       getQuestion()
     } catch (err) {
       console.log(err)
@@ -61,18 +71,13 @@ const Detail = ({ history, match }) => {
   }
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
-  useEffect(() => {
     const getUser = () => {
       const currentUser = Auth.getPayload().sub
       setUser(currentUser)
-      getQuestion()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     getUser()
-  }, [])
+    getQuestion()
+  }, [match.params.id, getQuestion])
 
   if (!question.hasOwnProperty('id')) {
     return null
@@ -111,11 +116,12 @@ const Detail = ({ history, match }) => {
             <div className="detail-text">{parse(question.text)}</div>
           </div>
           {/* answers */}
-          {question.answers.length > 0 &&
+          {sortedAnswers.length > 0 &&
             <>
               <div className="section">
                 <h5 className="title is-size-5">Answers:</h5>
-                {question.answers.map(answer => {
+                {sortedAnswers.map(answer => {
+
                   return (
                     <div className="box" key={answer.id}>
                       <div className="has-text-right">

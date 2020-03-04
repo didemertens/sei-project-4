@@ -63,10 +63,11 @@ class Nav extends React.Component {
         <div className={`navbar-menu ${navbarOpen ? 'is-active' : ''}`} id='navbar-menu'>
           <div className="navbar-end">
             {!Auth.isAuthenticated() &&
-              <div className="tibell-box">
+              <>
                 <Link id="navbar-item" to="/register" className="navbar-item">Sign up</Link>
                 <Link id="navbar-profile" to="/login" className="navbar-item">Log in</Link>
-              </div>}
+              </>
+            }
 
             {this.state.unseenChat
               ?
