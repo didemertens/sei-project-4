@@ -99,7 +99,7 @@ class Chat extends React.Component {
           <div className="columns">
             <div className="column is-8 is-offset-2 ">
               <div className="chat-header">
-                <h2 className="title">{chatData.owner.id === currentUser ? `Chat with ${chatData.receiver.username}`
+                <h2 className="title is-size-3">{chatData.owner.id === currentUser ? `Chat with ${chatData.receiver.username}`
                   : `Chat with ${chatData.owner.username}`}
                 </h2>
                 {chatData.owner.id === currentUser || chatData.receiver.id === currentUser

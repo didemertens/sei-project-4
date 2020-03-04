@@ -32,10 +32,6 @@ const Detail = ({ history, match }) => {
     }
   }, [match.params.id])
 
-  const handleChangeEditor = (content) => {
-    setAnswer({ ...answerData, text: content })
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
@@ -147,7 +143,9 @@ const Detail = ({ history, match }) => {
               <form onSubmit={handleSubmit} className="form">
                 <SunEditor
                   setContents={answerData.submitted ? 'Type your answer here' : ''}
-                  onChange={handleChangeEditor}
+                  onChange={(content) => {
+                    setAnswer({ ...answerData, text: content })
+                  }}
                   required="True"
                   lang="en"
                   placeholder="Type your answer here"

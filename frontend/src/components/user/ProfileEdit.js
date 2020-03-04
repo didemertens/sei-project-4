@@ -11,7 +11,6 @@ const ProfileEdit = ({ location, match, history }) => {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    console.log('renders')
     if (!location.state) {
       history.push('/profiles/')
     } else {
@@ -52,7 +51,6 @@ const ProfileEdit = ({ location, match, history }) => {
         })
       })
     }
-
     setLangOptions(langOptions)
   }
 
