@@ -1,5 +1,6 @@
 import React from 'react'
 import binocular from '../assets/binacular.jpg'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   return (
@@ -8,7 +9,7 @@ const Home = () => {
         <div className="column is-half home-column-left">
           <h1 className="title is-size-2-mobile is-size-2-tablet home-title">>_Git Together<span className="home-cursor">|</span></h1>
           <h5 className="subtitle is-size-3 is-size-5-tablet is-size-5-mobile">and explore a world of code</h5>
-          <a href="/questions" className="button is-warning">Go to all questions</a>
+          <Link to="/questions" className="button is-warning">Go to all questions</Link>
         </div>
         <div className="column is-half home-column-right">
           <img className="image home-image-bino" src={binocular} alt="Girl with binoculars" />
