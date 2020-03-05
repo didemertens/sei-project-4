@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { post } from 'axios'
 import Auth from '../lib/Auth'
 
-
 const Login = ({ history }) => {
   const [formData, setFormData] = useState({})
   const [error, setError] = useState('')
@@ -42,8 +41,8 @@ const Login = ({ history }) => {
                   placeholder="Email"
                   name="email"
                   onChange={handleChange}
-                  value={formData.email  || ''} 
-                  />
+                  value={formData.email || ''}
+                />
               </div>
             </div>
 
@@ -57,8 +56,8 @@ const Login = ({ history }) => {
                   placeholder="Password"
                   name="password"
                   onChange={handleChange}
-                  value={formData.password  || ''} 
-                  />
+                  value={formData.password || ''}
+                />
               </div>
             </div>
 

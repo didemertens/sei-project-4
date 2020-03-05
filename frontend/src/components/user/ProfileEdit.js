@@ -3,7 +3,7 @@ import ImageUpload from '../common/ImageUpload'
 import axios from 'axios'
 import Auth from '../lib/Auth'
 import Select from 'react-select'
-import { options } from '../common/options'
+import { options } from '../../lib/options'
 
 const ProfileEdit = ({ location, match, history }) => {
   const [userData, setUserData] = useState({})

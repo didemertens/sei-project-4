@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Select from 'react-select'
 import { post } from 'axios'
 import ImageUpload from '../common/ImageUpload'
-import { options } from '../common/options'
+import { options } from '../../lib/options'
 
 const Register = ({ history }) => {
   const [formData, setFormData] = useState({})
