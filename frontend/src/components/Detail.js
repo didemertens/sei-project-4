@@ -17,7 +17,7 @@ const Detail = ({ history, match }) => {
 
   const getQuestion = useCallback(async () => {
     try {
-      const { data } = await axios.get(`/api/questions/${match.params.id}`)
+      const { data } = await axios.get(`/api/questions/${match.params.id}/`)
       setQuestion(data)
 
       if (data.answers) {

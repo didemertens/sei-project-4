@@ -40,7 +40,8 @@ class Index extends React.Component {
 
   getQuestions = async () => {
     try {
-      const { data } = await get('/api/questions')
+      const { data } = await get('/api/questions/')
+      console.log(data)
       this.setState({ questions: data })
       this.handleChange(this.filterOptions[0])
     } catch (err) {

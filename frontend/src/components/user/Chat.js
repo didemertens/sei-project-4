@@ -46,7 +46,7 @@ class Chat extends React.Component {
 
   getChat = async () => {
     try {
-      const { data } = await axios.get(`/api/chats/${this.props.match.params.id}`,
+      const { data } = await axios.get(`/api/chats/${this.props.match.params.id}/`,
         { headers: { Authorization: `Bearer ${Auth.getToken()}` } }
       )
       this.setState({ chatData: data })
@@ -93,9 +93,9 @@ class Chat extends React.Component {
     return (
       <div className="section chat-whole-section">
         <div className="container">
-          <div className="has-text-left">
+          {/* <div className="has-text-left">
             <button className="button is-warning" onClick={() => this.props.history.goBack()}><TiArrowLeftThick /> Back</button>
-          </div>
+          </div> */}
           <div className="columns">
             <div className="column is-8 is-offset-2 ">
               <div className="chat-header">

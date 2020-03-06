@@ -41,7 +41,7 @@ class Profile extends React.Component {
 
   getUserData = async () => {
     try {
-      const { data } = await axios.get(`/api/users/${this.props.match.params.id}`,
+      const { data } = await axios.get(`/api/users/${this.props.match.params.id}/`,
         { headers: { Authorization: `Bearer ${Auth.getToken()}` } })
       this.setState({ userData: data })
       this.checkMessagesChats(data)

@@ -54,11 +54,11 @@ class Nav extends React.Component {
             <img className="image is-24x24 nav-image" src={logo} alt="Git Together logo" />
             Git Together
           </Link>
-          <a href='/#' onClick={this.toggleNav} role="button" id='navbar-burger' className={`navbar-burger ${navbarOpen ? 'is-active' : ''}`}>
+          <Link to='#' onClick={this.toggleNav} role="button" id='navbar-burger' className={`navbar-burger ${navbarOpen ? 'is-active' : ''}`}>
             <span></span>
             <span></span>
             <span></span>
-          </a>
+          </Link>
         </div>
         <div className={`navbar-menu ${navbarOpen ? 'is-active' : ''}`} id='navbar-menu'>
           <div className="navbar-end">
