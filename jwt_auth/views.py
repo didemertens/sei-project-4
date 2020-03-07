@@ -43,11 +43,11 @@ class LoginView(APIView):
         #  Buddy
         if user.buddy == None:
             buddies = User.objects.filter(buddy=None)
-            for p in buddies:
-                if p.username != user.username:
-                    user.buddy = p
-                    p.buddy = user
-                    p.save()
+            for other_user in buddies:
+                if other_user.username != user.username:
+                    user.buddy = other_user
+                    other_user.buddy = user
+                    other_user.save()
                     user.save()
 
         dt = datetime.now() + timedelta(days=7)

@@ -60,13 +60,13 @@ describe('Index Page Component', () => {
     }),
 
     // check if the text to log in is rendered when the user is not logged in
-    it('renders a text to log in when there without token', () => {
+    it('renders a text to log in without token', () => {
       const component = shallow((<Index questions={data} />))
       expect(component.find('.no-create-btn').text()).toEqual('Log in to ask a question')
     }),
 
     // check if filterQuestions in state with data
-    it('Renders a question with data on filter', () => {
+    it('renders questions when there is data', () => {
       const component = shallow((<Index questions={data} />))
       component.setState({ filterQuestions: data })
       expect(component.state('filterQuestions')).toEqual(data)
