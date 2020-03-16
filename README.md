@@ -56,7 +56,7 @@ The home page consists of the name of the website and a link to all the question
 
 Because of the time constraint, I only wrote tests for the Index page. I used Jest, Enzyme and Sinon to do this. I for example wanted to check whether people who are not logged in, couldn't see the button to create a new question and if all of the questions are exactly rendered on the page:
 
-```
+``` javascript
 describe('Index Page Component', () => {
   ...
 
@@ -87,7 +87,7 @@ The detail page shows the details of a question and the given answers (if any). 
 
 The information on the profile page depends on whether the logged in user looks at their own profile or the profile of another user. If they are looking at someone else's profile page, they wouldn't see the button to change the information nor the chats section. Every user has a buddy, which automatically gets assigned to them when they log in for the first time. In the backend, I check whether there is a user who doesn't have a buddy. If this is the case, the newly registered user will become buddies with this other user. Otherwise, the new user needs to wait for someone else to register and log in. I used the following code for this functionality in Django:
 
-```
+``` javascript
  if user.buddy == None:
     buddies = User.objects.filter(buddy=None)
         for other_user in buddies:
@@ -111,7 +111,7 @@ The last section of the profile page consists of the titles of the questions tha
 The chat page can only be viewed by the two users who are chatting. The messages from the current user are always showing to the right with a light orange colour as the background, while the messages from the other user are alligned to the left. The text editor SunEditor is used here as well, so users can help each other in a more private setting by sending code snippets. Every time the chat updates, which happens when one of the users sends a message, the chat container scrolls down so the most recent message is at the bottom. I used the ref attribute to do this:
 
 
-``` 
+``` javascript
   componentDidUpdate() {
     this.scrollToBottom()
   }
