@@ -46,8 +46,11 @@ $ python manage.py runserver
 The main components of the website are the home page, index page which links to the detail page of all of the individual questions, profile page and  chat page.
 
 ### 1. Home and Index page
+Home:
+<img src="frontend/src/assets/home-scr.png" alt="Home page" height="250"/> 
 
-<img src="frontend/src/assets/home-scr.png" alt="Home page" height="300"/> <img src="frontend/src/assets/index-scr.png" alt="Index page" height="300"/>
+Index:
+<img src="frontend/src/assets/index-scr.png" alt="Index page" height="250"/>
 
 The home page consists of the name of the website and a link to all the questions. Users can also register or log into their account via the navbar. If the button 'Go to all questions' is clicked, the user will be taken to the Index page. This page shows every question asked from newest to oldest. Users can change the filters to see oldest first or questions about a particular language, such as JavaScript. They can also use keywords in the search bar to look for a particular question. 
 
@@ -75,14 +78,14 @@ it('renders questions when there is data', () => {
 
 ### 2. Detail page
 
-<img src="frontend/src/assets/details-1-scr.png" alt="Detail page" height="300"/> <img src="frontend/src/assets/details-2-scr.png" alt="Detail page" height="300"/>
+<img src="frontend/src/assets/details-1-scr.png" alt="Detail page" height="250"/> <img src="frontend/src/assets/details-2-scr.png" alt="Detail page" height="250"/>
 
-The detail page shows the details of a question and the given answers (if any). Users can only delete their own questions and answers. The text teditor 'SunEditor' makes it possible for logged in users to post questions and answers with code snippets, as well as with for example highlighted sections and different font sizes. The answers are filtered from oldest to newest, so the first answer is always at the top.
+The detail page shows the details of a question and the given answers (if any). Users can only delete their own questions and answers. The third-party text teditor 'SunEditor' makes it possible for logged in users to post questions and answers with code snippets, as well as with for example highlighted sections and different font sizes. The answers are filtered from oldest to newest, so the first answer is always at the top.
 
 ### 3. Profile page
-<img src="frontend/src/assets/profile-1-scr.png" alt="Profile page" height="300"/> <img src="frontend/src/assets/profile-2-scr.png" alt="Profile page" height="300"/>
+<img src="frontend/src/assets/profile-1-scr.png" alt="Profile page" height="250"/> <img src="frontend/src/assets/profile-2-scr.png" alt="Profile page" height="250"/>
 
-The information on the profile page depends on whether the logged in user looks at their own profile or the profile of another user. If they are looking at someone else's profile page, they wouldn't see the button to change the information nor the chats section. Every user has a buddy, which automatically gets assigned to them when they log in for the first time. In the backend, I check whether there is a user who doesn't have a buddy. If this is the case, the newly registered user will become buddies with this other user. Otherwise, the new user needs to wait for someone else to register and log in. I just the following code for this functionality:
+The information on the profile page depends on whether the logged in user looks at their own profile or the profile of another user. If they are looking at someone else's profile page, they wouldn't see the button to change the information nor the chats section. Every user has a buddy, which automatically gets assigned to them when they log in for the first time. In the backend, I check whether there is a user who doesn't have a buddy. If this is the case, the newly registered user will become buddies with this other user. Otherwise, the new user needs to wait for someone else to register and log in. I used the following code for this functionality in Django:
 
 ```
  if user.buddy == None:
@@ -97,13 +100,13 @@ The information on the profile page depends on whether the logged in user looks 
 
 Users can also see their active chats. When they get a new message, they will be notified in the navbar (if they are not on their own profile page) and on their profile page in the chat section. 
 
-<img src="frontend/src/assets/profile-3-scr.png" alt="Profile page" height="300"/>
+<img src="frontend/src/assets/profile-3-scr.png" alt="Profile page" height="250"/>
 
 The last section of the profile page consists of the titles of the questions that the user has asked on the website. These link to the detail page of that particular question so the body of the question and the answers can be viewed.
 
 ### 4. Chat page
 
-<img src="frontend/src/assets/chat-1-scr.png" alt="Profile page" height="300"/>
+<img src="frontend/src/assets/chat-1-scr.png" alt="Profile page" height="250"/>
 
 The chat page can only be viewed by the two users who are chatting. The messages from the current user are always showing to the right with a light orange colour as the background, while the messages from the other user are alligned to the left. The text editor SunEditor is used here as well, so users can help each other in a more private setting by sending code snippets. Every time the chat updates, which happens when one of the users sends a message, the chat container scrolls down so the most recent message is at the bottom. I used the ref attribute to do this:
 
