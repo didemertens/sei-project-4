@@ -75,7 +75,6 @@ it('renders questions when there is data', () => {
 }
 ```
 
-
 ### 2. Detail page
 
 <img src="frontend/src/assets/details-1-scr.png" alt="Detail page" height="250"/> <img src="frontend/src/assets/details-2-scr.png" alt="Detail page" height="250"/>
@@ -127,10 +126,12 @@ The chat page can only be viewed by the two users who are chatting. The messages
 
 ```
 
-## Challenges and future improvements
-* Because I like a challenge, I decided to rewrite the pages to React Hooks after I'd created every functionality and page. Most of the pages use React Hooks already (such as the Detail, Register and Login pages), but in the future I want the entire app to be using Hooks. 
-* I didn't have any experience with writing tests for React, so I wrote a couple of tests for the index page to practice. I would like to learn more about React testing and write tests for all of the main components of the website.
-* The buddy functionality couples users regardless of the programming languages they picked during registration as this was quite tricky to implement in Django. I think the buddy system would be more useful when users are only buddied up if they have one or more of the same languages.
-* The notification system now only works for the chats. However, I think this should also be added to the question/answer functionality so users know when someone has answered their question.
+## Wins and challenges
+* Because I like a challenge (this was actually a win), I decided to rewrite the pages to React Hooks after I'd created every functionality and page. It was a lot of fun to work with something different and I managed to use Hooks for most of the pages, such as the Detail, Register and Login pages.
+* In the beginning, it was difficult to write tests for React with Enzyme as I'd never done that before. I wrote tests for the Index page to practice. The tests check for example if the main container is rendered, if it shows the questions and whether the search functionality works.
+
+## Future improvements
+* The buddy functionality couples users regardless of the programming languages they picked during registration as this was quite tricky to implement in Django. I think the buddy system would be more useful when users are only buddied up if they have picked one or more of the same languages.
+* The notification system only works for the chats at the moment. However, I think this should also be added to the question/answer functionality so users know when someone has answered their question.
 * Another thing I want to add to the question functionality is being able to save questions. That way, users can see those saved questions on their profile page if they ever needed to see the question and its answers again.
 
