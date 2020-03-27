@@ -127,8 +127,9 @@ The chat page can only be viewed by the two users who are chatting. The messages
 ```
 
 ## Wins and challenges
+* I did an online course on Django a while back, so I had some experience building websites with it. It was great going back to Django to better understand how it actually works. I included HTML pages when I used Django before, so adding React as the front-end made creating this project a lot easier.
 * Because I like a challenge (this was actually a win), I decided to rewrite the pages to React Hooks after I'd created every functionality and page. It was a lot of fun to work with something different and I managed to use Hooks for most of the pages, such as the Detail, Register and Login pages.
-* In the beginning, it was difficult to write tests for React with Enzyme as I'd never done that before. I wrote tests for the Index page to practice. The tests check for example if the main container is rendered, if it shows the questions and whether the search functionality works.
+* In the beginning, it was difficult to write tests for React with Enzyme as I'd never done that before. I wrote tests for the Index page to practice. The tests check for example if the main container is rendered, if it shows the questions and whether the search functionality works. However, because the Index page makes an Axios request to get all of the questions from the back-end, the tests didn't work for a long time. I eventually figured out how to fake this Axios request so I could create tests for all of the functionality of this page.
 
 ## Future improvements
 * The buddy functionality couples users regardless of the programming languages they picked during registration as this was quite tricky to implement in Django. I think the buddy system would be more useful when users are only buddied up if they have chosen one or more of the same languages.
